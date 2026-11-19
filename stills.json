@@ -1,0 +1,7 @@
+[
+  {"id": "01-boy-house", "file": "stills/01-boy-house.webp", "shows": "boy from behind on the front path, facing a cream ranch house, summer noon, dappled shade", "characters": ["boy"], "mood": "calm, ordinary", "motion": "leaves and shade stir; boy walks toward the house"},
+  {"id": "02-boy-bed", "file": "stills/02-boy-bed.webp", "shows": "boy in bed under a red blanket, dark room, eyes half shut", "characters": ["boy"], "mood": "uneasy, sad or ill", "motion": "slow breathing, eyes close or open"},
+  {"id": "03-red-sneaker", "file": "stills/03-red-sneaker.webp", "shows": "one red canvas sneaker on a wooden deck before a plank fence, utility pole, blue sky", "characters": [], "mood": "absence, something left behind", "motion": "laces stir, clouds drift", "note": "fake signature bottom right to clean out; low-top canvas sneaker reads 1950s+"},
+  {"id": "04-boy-fire-field", "file": "stills/04-boy-fire-field.webp", "shows": "boy from behind in tall grass facing a wall of fire and black smoke", "characters": ["boy"], "mood": "awe, danger", "motion": "grass bends, flames roll, smoke rises"},
+  {"id": "05-hand-wheat", "file": "stills/05-hand-wheat.webp", "shows": "a child's arm brushing ripe wheat under a summer sky", "characters": ["boy"], "mood": "peaceful, nostalgic", "motion": "hand moves through the wheat, stalks sway"}
+]
