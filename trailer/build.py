@@ -191,9 +191,9 @@ def render_audio(path):
     add(L, 0.6, w * env(len(w), 1.0, 0.3), 0.5)
     r0 = at('47-'); r = lowpass(lowpass(noise(a1 - r0), 60), 60); r /= np.abs(r).max()
     add(L, r0, r * np.linspace(0.1, 1, len(r)), 0.9)
-    t, t1 = at('11-', 0.1), at('08-', 1.1)
+    t, t1 = at('10-', 0.1), at('01-', 1.1)
     while t < t1:
-        add(L, t, click(0.03), 0.5); t += max(0.07, 0.28 - 0.21 * (t - at('11-')) / 2.6)
+        add(L, t, click(0.03), 0.5); t += max(0.07, 0.28 - 0.21 * (t - at('10-')) / 2.6)
     # 2. the sign: a crash, the drone, fire; a breath of silence before the bed
     boomat(at('12-'), 3.0, g=1.0)
     d = (np.sin(2 * np.pi * 55 * tt) + 0.6 * np.sin(2 * np.pi * 82.4 * tt) + 0.3 * np.sin(2 * np.pi * 110.5 * tt))
@@ -201,16 +201,16 @@ def render_audio(path):
     m = np.clip((tt - at('12-', .5)) / 4, 0, 1) * (tt < at('36b')) + np.clip((tt - at('37-')) / 2, 0, 1) * (tt < at('29-')) * 0.6
     L += 0.18 * d * m
     add(L, at('14-'), lowpass(noise(3.0), 2500) * env(int(3.0 * SR), 0.1, 0.5), 0.35)          # fire crackle
-    a, b = int((at('16-') - 0.5) * SR), int(at('16-') * SR)
+    a, b = int((at('17-') - 0.5) * SR), int(at('17-') * SR)
     L[a:b] *= np.linspace(1, 0, b - a) ** 2
     def beat(t0, t1, period, g):
         t = t0
         while t < t1:
             boomat(t, 0.5, 60, 40, g=g); boomat(t + 0.22, 0.4, 55, 38, g=g * 0.6); t += period
-    beat(at('16-'), at('22-'), 1.1, 0.6)                                                        # heartbeat
+    beat(at('17-'), at('22-'), 1.1, 0.6)                                                        # heartbeat
     # 3. the gear: visor, shells, the breech; the beat drops into the fire
     add(L, at('22-', 0.05), click(0.08) * 3, 0.8); boomat(at('22-', 0.12), 0.4, 300, 120, g=0.4)
-    add(L, at('23-', 0.1), click(0.05), 0.8); add(L, at('23-', 0.4), click(0.05), 0.8); add(L, at('23-', 0.75), click(0.07) * 2, 1.0)
+    add(L, at('30-', 0.1), click(0.05), 0.8); add(L, at('30-', 0.4), click(0.05), 0.8); add(L, at('30-', 0.75), click(0.07) * 2, 1.0)
     beat(at('22-'), at('25-'), 0.75, 0.7)
     beat(at('25-'), at('36-', 0.9), 0.4, 0.85)
     fr = lowpass(noise(3.2), 900) * env(int(3.2 * SR), 0.2, 0.4); add(L, at('34-'), fr, 0.8)  # fire roar
