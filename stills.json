@@ -189,5 +189,50 @@
   ],
   "mood": "resolve, ready to fight",
   "motion": "breath, eyes lift"
+ },
+ {
+  "id": "20-welder-helmet",
+  "file": null,
+  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "shows": "close-up of the hero's eyes through the slot of a battered blue-grey welder's helmet, flat orange-red background",
+  "characters": [
+   "seismologist"
+  ],
+  "mood": "ready, iconic",
+  "motion": "eyes narrow, helmet visor drops"
+ },
+ {
+  "id": "21-man-shotgun",
+  "file": null,
+  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "shows": "man in dark jacket and white shirt holding a shotgun against a golden plank wall, scorch marks at its foot",
+  "characters": [
+   "seismologist?"
+  ],
+  "mood": "grim resolve",
+  "motion": "he racks or lifts the gun",
+  "note2": "face differs from the hero in 07/11/19: thinner, older, shorter hair"
+ },
+ {
+  "id": "22-woman-red-cloth",
+  "file": null,
+  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "shows": "red-haired woman in white from behind, working at a heap of rust-red cloth",
+  "characters": [
+   "woman"
+  ],
+  "mood": "quiet, making something (a cloak? a banner? a fire blanket?)",
+  "motion": "her hands pull the cloth"
+ },
+ {
+  "id": "23-woman-sink-window",
+  "file": null,
+  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "shows": "red-haired woman from behind at a farmhouse sink before a wide window on a golden plain at sunset",
+  "characters": [
+   "woman"
+  ],
+  "mood": "waiting, calm before",
+  "motion": "hair stirs, light fades"
  }
 ]
