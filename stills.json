@@ -207,17 +207,17 @@
   "note": "FILE NOT YET IN REPO (shared in chat only)",
   "shows": "man in dark jacket and white shirt holding a shotgun against a golden plank wall, scorch marks at its foot",
   "characters": [
-   "seismologist?"
+   "farmhand"
   ],
   "mood": "grim resolve",
   "motion": "he racks or lifts the gun",
-  "note2": "face differs from the hero in 07/11/19: thinner, older, shorter hair"
+  "note2": "the farmhand, who gives his shotgun (beat 23)"
  },
  {
   "id": "22-woman-red-cloth",
   "file": null,
   "note": "FILE NOT YET IN REPO (shared in chat only)",
-  "shows": "red-haired woman in white from behind, working at a heap of rust-red cloth",
+  "shows": "red-haired woman in white from behind, working at a heap of rust-red cloth (beat 24b: soaking the wool coat)",
   "characters": [
    "woman"
   ],
@@ -240,8 +240,8 @@
   "file": "stills/24-handshake.webp",
   "shows": "two men shake hands, one in a white cuff, plain grey ground",
   "characters": [
-   "seismologist?",
-   "ally"
+   "seismologist",
+   "farmhand or welder"
   ],
   "mood": "pact, alliance",
   "motion": "grip tightens, hands part",
