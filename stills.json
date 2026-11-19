@@ -486,5 +486,51 @@
   ],
   "mood": "the final standoff",
   "motion": "wings unfurl, eyes glow"
+ },
+ {
+  "id": "44-woman-red-field",
+  "file": "stills/44-woman-red-field.webp",
+  "shows": "the woman in white from behind in a dark red field under a red-gold sky, hair in the wind",
+  "characters": [
+   "woman"
+  ],
+  "mood": "waiting, longing",
+  "motion": "hair and grass stir"
+ },
+ {
+  "id": "45-dragon-into-sun",
+  "file": "stills/45-dragon-into-sun.webp",
+  "shows": "the small black dragon rising into a huge pale sun, a white trail beneath it, over the wheat",
+  "characters": [
+   "dragon"
+  ],
+  "mood": "departure, release",
+  "motion": "it climbs, the trail lengthens"
+ },
+ {
+  "id": "46-trail-into-sun",
+  "file": "stills/46-trail-into-sun.webp",
+  "shows": "a pale column trail rising from the plain into the huge sun",
+  "characters": [],
+  "mood": "after it has gone",
+  "motion": "the trail drifts and thins"
+ },
+ {
+  "id": "47-aerial-fields",
+  "file": "stills/47-aerial-fields.webp",
+  "shows": "aerial view of patchwork fields and woods under a red haze",
+  "characters": [],
+  "mood": "vast, establishing",
+  "motion": "slow drift over the fields"
+ },
+ {
+  "id": "48-woman-watches-trail",
+  "file": "stills/48-woman-watches-trail.webp",
+  "shows": "the woman in white watching a thin white trail rise from the horizon",
+  "characters": [
+   "woman"
+  ],
+  "mood": "witness, farewell",
+  "motion": "the trail rises, her hair moves"
  }
 ]
