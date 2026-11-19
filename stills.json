@@ -1,7 +1,101 @@
 [
-  {"id": "01-boy-house", "file": "stills/01-boy-house.webp", "shows": "boy from behind on the front path, facing a cream ranch house, summer noon, dappled shade", "characters": ["boy"], "mood": "calm, ordinary", "motion": "leaves and shade stir; boy walks toward the house"},
-  {"id": "02-boy-bed", "file": "stills/02-boy-bed.webp", "shows": "boy in bed under a red blanket, dark room, eyes half shut", "characters": ["boy"], "mood": "uneasy, sad or ill", "motion": "slow breathing, eyes close or open"},
-  {"id": "03-red-sneaker", "file": "stills/03-red-sneaker.webp", "shows": "one red canvas sneaker on a wooden deck before a plank fence, utility pole, blue sky", "characters": [], "mood": "absence, something left behind", "motion": "laces stir, clouds drift", "note": "fake signature bottom right to clean out; low-top canvas sneaker reads 1950s+"},
-  {"id": "04-boy-fire-field", "file": "stills/04-boy-fire-field.webp", "shows": "boy from behind in tall grass facing a wall of fire and black smoke", "characters": ["boy"], "mood": "awe, danger", "motion": "grass bends, flames roll, smoke rises"},
-  {"id": "05-hand-wheat", "file": "stills/05-hand-wheat.webp", "shows": "a child's arm brushing ripe wheat under a summer sky", "characters": ["boy"], "mood": "peaceful, nostalgic", "motion": "hand moves through the wheat, stalks sway"}
+ {
+  "id": "01-boy-house",
+  "file": "stills/01-boy-house.webp",
+  "shows": "boy from behind on the front path, facing a cream ranch house, summer noon, dappled shade",
+  "characters": [
+   "boy"
+  ],
+  "mood": "calm, ordinary",
+  "motion": "leaves and shade stir; boy walks toward the house"
+ },
+ {
+  "id": "02-boy-bed",
+  "file": "stills/02-boy-bed.webp",
+  "shows": "boy in bed under a red blanket, dark room, eyes half shut",
+  "characters": [
+   "boy"
+  ],
+  "mood": "uneasy, sad or ill",
+  "motion": "slow breathing, eyes close or open"
+ },
+ {
+  "id": "03-red-sneaker",
+  "file": "stills/03-red-sneaker.webp",
+  "shows": "one red canvas sneaker on a wooden deck before a plank fence, utility pole, blue sky",
+  "characters": [],
+  "mood": "absence, something left behind",
+  "motion": "laces stir, clouds drift",
+  "note": "fake signature bottom right to clean out; low-top canvas sneaker reads 1950s+"
+ },
+ {
+  "id": "04-boy-fire-field",
+  "file": "stills/04-boy-fire-field.webp",
+  "shows": "boy from behind in tall grass facing a wall of fire and black smoke",
+  "characters": [
+   "boy"
+  ],
+  "mood": "awe, danger",
+  "motion": "grass bends, flames roll, smoke rises"
+ },
+ {
+  "id": "05-hand-wheat",
+  "file": "stills/05-hand-wheat.webp",
+  "shows": "a child's arm brushing ripe wheat under a summer sky",
+  "characters": [
+   "boy"
+  ],
+  "mood": "peaceful, nostalgic",
+  "motion": "hand moves through the wheat, stalks sway"
+ },
+ {
+  "id": "06-kitchen-mother-boy",
+  "file": "stills/06-kitchen-mother-boy.webp",
+  "shows": "mother and boy from behind at a kitchen counter, both in red tops, a big pot, tomatoes",
+  "characters": [
+   "boy",
+   "mother"
+  ],
+  "mood": "domestic, quiet tension",
+  "motion": "steam from the pot, mother turns her head"
+ },
+ {
+  "id": "07-man-bookshop",
+  "file": "stills/07-man-bookshop.webp",
+  "shows": "young man with dark wavy hair in front of a bookshop, open book, looking at us",
+  "characters": [
+   "young man"
+  ],
+  "mood": "serious, searching",
+  "motion": "turns a page, looks up"
+ },
+ {
+  "id": "08-man-desk-papers",
+  "file": "stills/08-man-desk-papers.webp",
+  "shows": "young man reading papers at a green desk piled with records, cluttered office or archive, window light",
+  "characters": [
+   "young man"
+  ],
+  "mood": "research, obsession",
+  "motion": "turns paper, dust in window light"
+ },
+ {
+  "id": "09-woman-library",
+  "file": "stills/09-woman-library.webp",
+  "shows": "red-haired young woman in a white top holding a small book in a library, looking at us",
+  "characters": [
+   "woman"
+  ],
+  "mood": "calm, knowing",
+  "motion": "breath, closes the book"
+ },
+ {
+  "id": "10-car-plain",
+  "file": "stills/10-car-plain.webp",
+  "shows": "a lone pale car on a dirt road across a vast flat plain, huge pale sky",
+  "characters": [],
+  "mood": "lonely, journey",
+  "motion": "car drives slowly across, dust trails",
+  "note": "car reads 1960s"
+ }
 ]
