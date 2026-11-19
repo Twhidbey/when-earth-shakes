@@ -532,5 +532,50 @@
   ],
   "mood": "witness, farewell",
   "motion": "the trail rises, her hair moves"
+ },
+ {
+  "id": "49-glowing-pit",
+  "file": null,
+  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "shows": "from above: a glowing red pit opened in the dark plain, smoke rising, under a burnt-orange sky",
+  "characters": [
+   "dragon (its lair)"
+  ],
+  "mood": "the source, where it came up",
+  "motion": "the glow pulses, smoke rises"
+ },
+ {
+  "id": "50-man-in-fissure",
+  "file": null,
+  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "shows": "the coated man walking down into a fiery fissure of broken rock",
+  "characters": [
+   "seismologist"
+  ],
+  "mood": "descent into the lair",
+  "motion": "flames lick, embers rise"
+ },
+ {
+  "id": "51-woman-storm-portrait",
+  "file": null,
+  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "shows": "the red-haired woman close up, lit gold against a dark storm sky over wheat, worried",
+  "characters": [
+   "woman"
+  ],
+  "mood": "fear, resolve",
+  "motion": "hair whips in the wind"
+ },
+ {
+  "id": "52-man-dragon-smoke",
+  "file": null,
+  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "shows": "the man in braces from behind in the wheat facing a vast black mass of smoke with dragon spines rising out of it",
+  "characters": [
+   "seismologist",
+   "dragon"
+  ],
+  "mood": "first sight of the dragon",
+  "motion": "smoke rolls, spines emerge"
  }
 ]
