@@ -376,5 +376,61 @@
    1424,
    848
   ]
+ },
+ {
+  "id": "34-dragon-shooter-rocks",
+  "file": null,
+  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "shows": "the dragon coiled in the orange sky; the coated figure on a heap of dark rocks aims up at it",
+  "characters": [
+   "dragon",
+   "seismologist"
+  ],
+  "mood": "the fight, awe",
+  "motion": "wings beat, muzzle flash, coat whips"
+ },
+ {
+  "id": "35-helmet-aim-field",
+  "file": null,
+  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "shows": "the helmeted man from behind aiming the shotgun across a golden field into a yellow haze",
+  "characters": [
+   "seismologist"
+  ],
+  "mood": "the hunt",
+  "motion": "wheat sways, he steadies, fires"
+ },
+ {
+  "id": "36-man-runs-at-fire",
+  "file": null,
+  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "shows": "a small dark figure running toward a towering wall of fire across a dry field",
+  "characters": [
+   "seismologist"
+  ],
+  "mood": "courage",
+  "motion": "flames roll, he runs"
+ },
+ {
+  "id": "37-helmet-in-fire",
+  "file": null,
+  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "shows": "the helmeted man in a black coat striding through burning wheat, embers flying",
+  "characters": [
+   "seismologist"
+  ],
+  "mood": "unstoppable",
+  "motion": "embers swirl, he strides toward us"
+ },
+ {
+  "id": "38-helmet-water-fire",
+  "file": null,
+  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "shows": "the helmeted man waist-deep in dark water, fire blooming behind him",
+  "characters": [
+   "seismologist"
+  ],
+  "mood": "the plunge, survival",
+  "motion": "water ripples, fire flickers"
  }
 ]
