@@ -234,5 +234,147 @@
   ],
   "mood": "waiting, calm before",
   "motion": "hair stirs, light fades"
+ },
+ {
+  "id": "24-handshake",
+  "file": "stills/24-handshake.webp",
+  "shows": "two men shake hands, one in a white cuff, plain grey ground",
+  "characters": [
+   "seismologist?",
+   "ally"
+  ],
+  "mood": "pact, alliance",
+  "motion": "grip tightens, hands part",
+  "size": [
+   2000,
+   1190
+  ]
+ },
+ {
+  "id": "25-helmet-field-a",
+  "file": "stills/25-helmet-field-a.webp",
+  "shows": "figure in welder's helmet and long dark coat, gun in hand, walking toward us through wheat, flat grey sky",
+  "characters": [
+   "seismologist"
+  ],
+  "mood": "iconic, determined",
+  "motion": "wheat whips, he strides",
+  "size": [
+   1424,
+   848
+  ]
+ },
+ {
+  "id": "26-helmet-field-b",
+  "file": "stills/26-helmet-field-b.webp",
+  "shows": "the same, wider frame, figure a little to the right",
+  "characters": [
+   "seismologist"
+  ],
+  "mood": "iconic, determined",
+  "motion": "wheat whips, he strides",
+  "size": [
+   2000,
+   1190
+  ]
+ },
+ {
+  "id": "27-dragon-scales",
+  "file": "stills/27-dragon-scales.webp",
+  "shows": "close-up of dark metallic dragon scales lit from above",
+  "characters": [
+   "dragon"
+  ],
+  "mood": "menace, texture",
+  "motion": "scales ripple as it breathes",
+  "size": [
+   2000,
+   1190
+  ]
+ },
+ {
+  "id": "28-dragon-eye",
+  "file": "stills/28-dragon-eye.webp",
+  "shows": "the dragon's red slit-pupil eye in black scales",
+  "characters": [
+   "dragon"
+  ],
+  "mood": "intense",
+  "motion": "the pupil narrows, the lid blinks",
+  "size": [
+   2000,
+   1190
+  ]
+ },
+ {
+  "id": "29-fire-smoke-abstract",
+  "file": "stills/29-fire-smoke-abstract.webp",
+  "shows": "abstract swirling fire and grey smoke",
+  "characters": [],
+  "mood": "chaos, heat",
+  "motion": "roils; good for transitions and title backing",
+  "size": [
+   2000,
+   1190
+  ]
+ },
+ {
+  "id": "30-man-rock-pile",
+  "file": "stills/30-man-rock-pile.webp",
+  "shows": "a coated figure standing on a heap of dark rocks on a flat plain under a burning sunset sky",
+  "characters": [
+   "seismologist"
+  ],
+  "mood": "aftermath or vigil",
+  "motion": "clouds drift, coat stirs",
+  "size": [
+   2000,
+   1190
+  ]
+ },
+ {
+  "id": "31-dragon-shooter",
+  "file": "stills/31-dragon-shooter.jpg",
+  "shows": "black winged dragon coiled in an orange sky; a small figure on a mound aims a shotgun up at it",
+  "characters": [
+   "dragon",
+   "seismologist"
+  ],
+  "mood": "the fight, awe",
+  "motion": "wings beat, the gun flashes",
+  "size": [
+   1344,
+   800
+  ]
+ },
+ {
+  "id": "32-dragon-figure-a",
+  "file": "stills/32-dragon-figure-a.webp",
+  "shows": "the same dragon over a small standing figure on a mound, smoke banks, wide",
+  "characters": [
+   "dragon",
+   "seismologist"
+  ],
+  "mood": "standoff",
+  "motion": "wings beat, smoke rolls",
+  "size": [
+   2000,
+   1190
+  ]
+ },
+ {
+  "id": "33-dragon-figure-b",
+  "file": "stills/33-dragon-figure-b.webp",
+  "shows": "the same scene, slightly different framing, figure smaller",
+  "characters": [
+   "dragon",
+   "seismologist"
+  ],
+  "mood": "standoff",
+  "motion": "wings beat, smoke rolls",
+  "size": [
+   1424,
+   848
+  ]
  }
 ]
