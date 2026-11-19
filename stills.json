@@ -144,13 +144,50 @@
  },
  {
   "id": "15-town-watches-smoke",
-  "file": null,
-  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "file": "stills/15-town-watches-smoke.webp",
   "shows": "townsfolk from behind watching a dark smoke column beside a farmhouse at dusk",
   "characters": [
    "townsfolk"
   ],
   "mood": "dread, community",
   "motion": "smoke rolls, lights in the farmhouse windows"
+ },
+ {
+  "id": "16-man-bandaged-bed",
+  "file": "stills/16-man-bandaged-bed.webp",
+  "shows": "the dark-haired man in bed, head bandaged, plasters on his cheek, eyes half shut",
+  "characters": [
+   "seismologist"
+  ],
+  "mood": "wounded, aftermath",
+  "motion": "slow breathing, eyes open"
+ },
+ {
+  "id": "17-burnt-village",
+  "file": "stills/17-burnt-village.webp",
+  "shows": "a small prairie village from above, a burnt black trail through the wheat with small fires leading to the houses, smoke",
+  "characters": [],
+  "mood": "devastation, the dragon's path",
+  "motion": "fires flicker, smoke drifts"
+ },
+ {
+  "id": "18-crowd-doorway",
+  "file": "stills/18-crowd-doorway.webp",
+  "shows": "townsfolk in white from behind, crowding a dark doorway of a wooden building, one man glancing back",
+  "characters": [
+   "townsfolk"
+  ],
+  "mood": "secret, ritual, foreboding",
+  "motion": "they shift, one turns"
+ },
+ {
+  "id": "19-man-bandaged-portrait",
+  "file": "stills/19-man-bandaged-portrait.webp",
+  "shows": "the man with a bandage round his head, white undershirt, hard stare at us",
+  "characters": [
+   "seismologist"
+  ],
+  "mood": "resolve, ready to fight",
+  "motion": "breath, eyes lift"
  }
 ]
