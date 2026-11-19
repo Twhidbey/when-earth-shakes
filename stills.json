@@ -97,5 +97,60 @@
   "mood": "lonely, journey",
   "motion": "car drives slowly across, dust trails",
   "note": "car reads 1960s"
+ },
+ {
+  "id": "11-man-red-box",
+  "file": null,
+  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "shows": "dark-haired man in white shirt and braces holding a red instrument box with a cable, standing in wheat under big clouds",
+  "characters": [
+   "seismologist"
+  ],
+  "mood": "concentration, unease",
+  "motion": "wheat sways, he looks down at the box, needle hum"
+ },
+ {
+  "id": "12-man-smoke-column",
+  "file": null,
+  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "shows": "the same man from behind in wheat facing a huge column of smoke rising from the field",
+  "characters": [
+   "seismologist"
+  ],
+  "mood": "awe, first sign",
+  "motion": "smoke billows, wheat bends"
+ },
+ {
+  "id": "13-woman-burnt-field",
+  "file": null,
+  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "shows": "woman in a white dress walking alone through a smouldering burnt strip of wheat, seen from above",
+  "characters": [
+   "woman"
+  ],
+  "mood": "aftermath, eerie calm",
+  "motion": "smoke drifts, embers flicker, she walks on"
+ },
+ {
+  "id": "14-woman-wheat-portrait",
+  "file": null,
+  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "shows": "red-haired woman close up in wheat against a black storm sky, looking at us",
+  "characters": [
+   "woman"
+  ],
+  "mood": "resolve",
+  "motion": "hair and wheat move in the wind"
+ },
+ {
+  "id": "15-town-watches-smoke",
+  "file": null,
+  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "shows": "townsfolk from behind watching a dark smoke column beside a farmhouse at dusk",
+  "characters": [
+   "townsfolk"
+  ],
+  "mood": "dread, community",
+  "motion": "smoke rolls, lights in the farmhouse windows"
  }
 ]
