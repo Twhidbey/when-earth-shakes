@@ -213,7 +213,7 @@ def render_audio(path):
     add(L, at('30-', 0.1), click(0.05), 0.8); add(L, at('30-', 0.4), click(0.05), 0.8); add(L, at('30-', 0.75), click(0.07) * 2, 1.0)
     beat(at('22-'), at('25-'), 0.75, 0.7)
     beat(at('25-'), at('36-', 0.9), 0.4, 0.85)
-    fr = lowpass(noise(3.2), 900) * env(int(3.2 * SR), 0.2, 0.4); add(L, at('34-'), fr, 0.8)  # fire roar
+    fd = at('36-') - at('34-'); fr = lowpass(noise(fd), 900) * env(int(fd * SR), 0.6, 0.4); add(L, at('34-'), fr, 0.8)  # fire roar
     sp = lowpass(noise(0.6), 1500) * env(int(0.6 * SR), 0.01, 0.4); add(L, at('36-', 0.1), sp, 0.7)  # splash and hiss
     # 4. the hold: silence, drips, the low note, the title hit
     a, b = int((at('36-', 0.95)) * SR), int(at('37-', 0.3) * SR)
