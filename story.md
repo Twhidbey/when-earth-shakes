@@ -11,11 +11,12 @@ and finds a black dragon under the fields. Audience: young adults, clean enough 
 4. **First encounter, defeat.** The eye (28), the scales (27). He is hurt (16).
 5. **The town's secret.** People in white crowd a dark doorway (18). The woman waits (23),
    works the red cloth (22), walks the burnt field (13), looks at us from the wheat (14).
-6. **Resolve.** Bandaged stare (19). A handshake: an ally (24). The shotgun (21). The helmet (20).
+6. **Resolve.** Bandaged stare (19). A handshake: an ally (24). The shotgun (21); shotgun or sword, or both (40, 42, 43). The helmet (20).
 7. **The hunt.** Helmeted through the wheat (25, 26), aiming across the field (35),
    running at the wall of fire (36), striding through burning wheat (37).
 8. **The fight.** On the rock heap under the dragon (31, 32, 33, 34). In the water as fire blooms (38).
-9. **After.** Alone on the rocks under the burning sky (30). The boy before the fire (04).
+   A sword (40, 42): the final face-off under the spread wings (43).
+9. **After.** The helmet in still water (39); wading into the sunset pool (41); alone on the rocks (30). The boy before the fire (04).
 
 Open questions: who the boy is; the woman's role; the people in white; how the dragon is ended
-(driven off or killed); 1930 vs the 1950s look of 01, 03, 06, 10; the shotgun man's face (21).
+(driven off or killed); 1930 vs the 1950s look of 01, 03, 06, 10; the shotgun man's face (21); shotgun or sword, or both (40, 42, 43).

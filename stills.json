@@ -432,5 +432,59 @@
   ],
   "mood": "the plunge, survival",
   "motion": "water ripples, fire flickers"
+ },
+ {
+  "id": "39-helmet-calm-water",
+  "file": null,
+  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "shows": "the helmet, shoulders deep in still dark water, sunset glowing on its metal, ripples",
+  "characters": [
+   "seismologist"
+  ],
+  "mood": "stillness after",
+  "motion": "ripples spread, reflection wavers"
+ },
+ {
+  "id": "40-sword",
+  "file": null,
+  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "shows": "a long curved sword against swirling red-orange fire",
+  "characters": [],
+  "mood": "a new weapon",
+  "motion": "embers drift, light runs along the blade"
+ },
+ {
+  "id": "41-man-in-sunset-pool",
+  "file": null,
+  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "shows": "a lone figure wading into a sunset pool on the plain",
+  "characters": [
+   "seismologist"
+  ],
+  "mood": "cleansing, ending",
+  "motion": "water shimmers, sun sinks"
+ },
+ {
+  "id": "42-helmet-sword-red-sky",
+  "file": null,
+  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "shows": "the helmeted man in a long coat with a sword, red sky, on a rise",
+  "characters": [
+   "seismologist"
+  ],
+  "mood": "poster pose",
+  "motion": "coat stirs, clouds slide"
+ },
+ {
+  "id": "43-dragon-face-off",
+  "file": null,
+  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "shows": "the dragon rising with spread wings over the plain, red eyes; the man from behind with a sword",
+  "characters": [
+   "dragon",
+   "seismologist"
+  ],
+  "mood": "the final standoff",
+  "motion": "wings unfurl, eyes glow"
  }
 ]
