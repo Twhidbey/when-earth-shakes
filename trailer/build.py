@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build the trailer rough cut from edit.json: stills with slow moves, verse cards,
 and a placeholder sound bed made in code. Usage: python3 trailer/build.py [out.mp4]"""
-import json, os, subprocess, sys, wave
+import json, os, re, subprocess, sys, wave
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
@@ -69,7 +69,7 @@ def text_layer(s, t):
         t0, t1 = 2.4, s['dur'] - 1.2
     else:
         t0, t1 = 0.5, s['dur'] - 0.4
-    if 'text' in s:
+    if 'text' in s and E.get('show_text', True):
         a = smooth((tt - t0) / 0.6) * smooth((t1 - tt) / 0.5)
         if a > 0:
             y = H * (0.62 if 'title' in s else 0.80)
@@ -143,71 +143,98 @@ def click(d=0.05, fc=3000):
     tt = np.arange(int(d * SR)) / SR
     return noise(d) * np.exp(-tt * 120) * 0.6
 
+def at(name, off=0.0):
+    """time of a shot's start (by the start of its file name) plus an offset: sound cues follow the shots"""
+    for s in E['shots']:
+        if s['file'].startswith(name):
+            return s['start'] + off
+    raise KeyError(name)
+
+def voice(text):
+    """a recorded line, made to sound like an old radio: narrow band, a little drive, warm"""
+    src = os.path.join(HERE, 'voice', re.sub(r'[^a-z0-9]+', '-', text.lower()).strip('-')[:48] + '.mp3')
+    raw = subprocess.run(['ffmpeg', '-loglevel', 'error', '-i', src, '-af',
+        'silenceremove=stop_periods=-1:stop_duration=0.45:stop_threshold=-42dB,'
+        'highpass=f=220,lowpass=f=3400,acompressor=threshold=-20dB:ratio=4:makeup=6,'
+        'equalizer=f=1400:t=q:w=1.2:g=5,volume=2.2,asoftclip=type=tanh,highpass=f=180,lowpass=f=3800',
+        '-ar', str(SR), '-ac', '1', '-f', 'f32le', '-'], capture_output=True, check=True).stdout
+    return np.frombuffer(raw, dtype='<f4').astype(float)
+
 def render_audio(path):
     n = int(END * SR)
-    L = np.zeros(n)
+    L = np.zeros(n)          # sound bed
+    V = np.zeros(n)          # voice
     tt = np.arange(n) / SR
-    # radio static and tuning at the open, crackle bed through act 1
-    st = lowpass(noise(3.2), 3500) - lowpass(noise(3.2), 400)
-    tun = np.sin(2 * np.pi * np.cumsum(900 + 700 * np.sin(np.linspace(0, 5, len(st)))) / SR) * 0.08
-    add(L, 0.0, (st * 0.5 + tun) * env(len(st), 0.05, 1.0), 0.6)
-    crack = np.zeros(int(22 * SR))
-    for k in rng.integers(0, len(crack) - 400, 260):
-        crack[k:k + 200] += click(200 / SR) * rng.uniform(0.2, 1)
-    add(L, 2.5, crack * env(len(crack), 1, 3), 0.25)
-    # wind
-    w = lowpass(noise(21), 500) * (0.6 + 0.4 * np.sin(np.linspace(0, 9, int(21 * SR))))
-    add(L, 3.0, w * env(len(w), 2, 1.5), 0.5)
-    # deep rumble rising through act 1, stopping dead at 24.0
-    r = lowpass(lowpass(noise(15), 60), 60)
-    r = r / np.abs(r).max()
-    add(L, 9.0, r * np.linspace(0.1, 1, len(r)), 0.9)
-    # seismometer needle ticking faster
-    t = 13.6
-    while t < 18.0:
-        add(L, t, click(0.03), 0.5)
-        t += 0.32 - 0.22 * (t - 13.6) / 4.4
-    L[int(24.0 * SR):int(25.0 * SR)] = 0
-    # act 2: crash, drone, heartbeat
-    add(L, 25.0, boom(3.0), 1.0)
+    def add(buf, t, x, g=1.0):
+        i = int(t * SR); j = min(len(buf), i + len(x))
+        if j > i: buf[i:j] += g * x[:j - i]
+    def boomat(t, *a, g=1.0): add(L, t, boom(*a), g)
+    # voice lines, each with a faint radio hum and crackle under it
+    for s in E['shots']:
+        if 'vo' in s:
+            v = voice(s['text'])
+            v = v / max(1e-9, np.abs(v).max()) * 0.9
+            t0 = s['start'] + s['vo']
+            k = np.arange(len(v) + int(0.6 * SR)) / SR
+            hum = 0.012 * (np.sin(2 * np.pi * 60 * k) + 0.5 * np.sin(2 * np.pi * 120 * k))
+            cr = np.zeros(len(k))
+            for q in rng.integers(0, len(k) - 400, max(1, int(len(k) / SR * 14))):
+                cr[q:q + 200] += click(200 / SR) * rng.uniform(0.1, 0.5)
+            add(V, t0 - 0.2, hum * env(len(k), 0.15, 0.3) + 0.08 * cr)
+            add(V, t0, v)
+    # 1. the hush: tuning a radio, crackle, wind, the rumble rising, the needle ticking, then dead stop
+    st = lowpass(noise(1.8), 3500) - lowpass(noise(1.8), 400)
+    tun = np.sin(2 * np.pi * np.cumsum(900 + 700 * np.sin(np.linspace(0, 4, len(st)))) / SR) * 0.08
+    add(L, 0.0, (st * 0.5 + tun) * env(len(st), 0.05, 0.6), 0.6)
+    a1 = at('12-') - 0.5                       # end of act 1
+    w = lowpass(noise(a1), 500) * (0.6 + 0.4 * np.sin(np.linspace(0, 7, int(a1 * SR))))
+    add(L, 0.8, w * env(len(w), 1.5, 1.0), 0.5)
+    r0 = at('47-'); r = lowpass(lowpass(noise(a1 - r0), 60), 60); r /= np.abs(r).max()
+    add(L, r0, r * np.linspace(0.1, 1, len(r)), 0.9)
+    t, t1 = at('11-', 0.2), at('11-', 2.5)
+    while t < t1:
+        add(L, t, click(0.03), 0.5); t += 0.3 - 0.2 * (t - at('11-')) / 2.6
+    L[int(a1 * SR):int(at('12-') * SR)] = 0
+    # 2. the sign: crash, drone, heartbeat
+    boomat(at('12-'), 3.0, g=1.0)
     d = (np.sin(2 * np.pi * 55 * tt) + 0.6 * np.sin(2 * np.pi * 82.4 * tt) + 0.3 * np.sin(2 * np.pi * 110.5 * tt))
     d *= 0.75 + 0.25 * np.sin(2 * np.pi * 0.2 * tt)
-    m = np.clip((tt - 26) / 10, 0, 1) * (tt < 70) + np.clip((tt - 78) / 2, 0, 1) * (tt < 84) * 0.6
+    m = np.clip((tt - at('12-', 1)) / 8, 0, 1) * (tt < at('36b')) + np.clip((tt - at('40-')) / 2, 0, 1) * (tt < at('29-')) * 0.6
     L += 0.18 * d * m
     def beat(t0, t1, period, g):
         t = t0
         while t < t1:
-            add(L, t, boom(0.5, 60, 40), g)
-            add(L, t + 0.22, boom(0.4, 55, 38), g * 0.6)
-            t += period
-    beat(30.0, 50.0, 1.25, 0.55)
-    beat(50.0, 58.0, 0.85, 0.7)
-    # act 3 sound effects
-    add(L, 45.2, lowpass(noise(1.6), 300) * env(int(1.6 * SR), 0.6, 0.9), 0.5)          # breath
-    add(L, 48.0, lowpass(noise(2.0), 2500) * env(int(2.0 * SR), 0.1, 0.5), 0.3)         # fire crackle
-    add(L, 54.05, click(0.08) * 3, 0.8); add(L, 54.12, boom(0.4, 300, 120), 0.4)       # visor clank
-    add(L, 56.1, click(0.05), 0.8); add(L, 56.5, click(0.05), 0.8); add(L, 57.0, click(0.07) * 2, 1.0)  # shells, breech
-    beat(58.0, 69.0, 0.5, 0.8)                                                           # the beat drops
-    fr = lowpass(noise(6), 900) * env(int(6 * SR), 1.0, 1.0)
-    add(L, 60.0, fr, 0.7)                                                                # fire roar
-    add(L, 66.4, noise(0.25) * np.exp(-np.arange(int(0.25 * SR)) / SR * 18), 1.0)       # shotgun blast
-    add(L, 66.4, boom(1.5, 90, 35), 1.0)
+            boomat(t, 0.5, 60, 40, g=g); boomat(t + 0.22, 0.4, 55, 38, g=g * 0.6); t += period
+    beat(at('15-'), at('20-'), 1.25, 0.55)
+    beat(at('20-'), at('25-'), 0.85, 0.7)
+    add(L, at('28-', 0.2), lowpass(noise(1.6), 300) * env(int(1.6 * SR), 0.6, 0.9), 0.5)      # breath
+    add(L, at('14-'), lowpass(noise(2.0), 2500) * env(int(2.0 * SR), 0.1, 0.5), 0.3)           # fire crackle
+    # 3. the rise
+    add(L, at('22-', 0.05), click(0.08) * 3, 0.8); boomat(at('22-', 0.12), 0.4, 300, 120, g=0.4)  # visor clank
+    add(L, at('23-', 0.1), click(0.05), 0.8); add(L, at('23-', 0.5), click(0.05), 0.8); add(L, at('23-', 1.0), click(0.07) * 2, 1.0)
+    beat(at('25-'), at('41-'), 0.5, 0.8)
+    fr = lowpass(noise(6), 900) * env(int(6 * SR), 1.0, 1.0); add(L, at('34-'), fr, 0.7)      # fire
+    tb = at('31-', 2.1)                                                                         # shotgun
+    add(L, tb, noise(0.25) * np.exp(-np.arange(int(0.25 * SR)) / SR * 18), 1.0); boomat(tb, 1.5, 90, 35, g=1.0)
     ro = lowpass(noise(2.2), 400) * (0.6 + 0.4 * np.sin(2 * np.pi * 9 * np.arange(int(2.2 * SR)) / SR))
-    add(L, 68.0, ro * env(len(ro), 0.1, 1.2), 1.2)                                       # roar
-    a, b = int(69.6 * SR), int(70.0 * SR)
-    L[a:b] *= np.linspace(1, 0, b - a)
-    L[int(70.0 * SR):int(78.0 * SR)] *= 0                                                # silence
-    for t in (70.8, 71.9, 72.6, 74.1, 75.4, 76.9):                                      # drips
-        add(L, t, np.sin(2 * np.pi * np.linspace(1400, 700, 2000).cumsum() / SR) * np.exp(-np.arange(2000) / 300), 0.25)
-    add(L, 78.0, boom(4.0, 45, 30), 0.9)                                                 # the low note
-    add(L, 85.5, boom(5.0, 60, 25), 1.0)                                                 # title hit
-    cr = np.zeros(int(7 * SR))
-    for k in rng.integers(0, len(cr) - 400, 90):
-        cr[k:k + 200] += click(200 / SR)
-    add(L, 86.0, cr * np.linspace(1, 0, len(cr)), 0.2)
-    L /= max(1e-9, np.abs(L).max()) / 0.85
-    st = np.stack([L, L], 1)
-    pcm = (st * 32767).astype('<i2')
+    add(L, at('41-'), ro * env(len(ro), 0.1, 1.2), 1.2)                                        # roar
+    # 4. the hold: silence, drips, the low note
+    a, b = int((at('36b') - 0.4) * SR), int(at('36b') * SR)
+    L[a:b] *= np.linspace(1, 0, b - a); L[b:int(at('40-') * SR)] = 0
+    for o in (0.8, 1.9, 2.6, 4.1, 5.4, 6.9):
+        add(L, at('36b', o), np.sin(2 * np.pi * np.linspace(1400, 700, 2000).cumsum() / SR) * np.exp(-np.arange(2000) / 300), 0.25)
+    boomat(at('40-'), 4.0, 45, 30, g=0.9)
+    boomat(at('29-', 2.0), 5.0, 60, 25, g=1.0)                                                  # title hit
+    cr = np.zeros(int(6 * SR))
+    for k in rng.integers(0, len(cr) - 400, 80): cr[k:k + 200] += click(200 / SR)
+    add(L, at('29-', 2.5), cr * np.linspace(1, 0, len(cr)), 0.2)
+    # mix: the bed ducks under the voice
+    L /= max(1e-9, np.abs(L).max()) / 0.6
+    duck = (np.abs(V) > 0.02).astype(float)
+    k = int(0.3 * SR); duck = np.convolve(duck, np.ones(k) / k, 'same').clip(0, 1)
+    M = L * (1 - 0.55 * duck) + V
+    M /= max(1e-9, np.abs(M).max()) / 0.9
+    pcm = (np.stack([M, M], 1) * 32767).astype('<i2')
     with wave.open(path, 'wb') as f:
         f.setnchannels(2); f.setsampwidth(2); f.setframerate(SR); f.writeframes(pcm.tobytes())
 
