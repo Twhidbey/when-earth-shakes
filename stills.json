@@ -100,8 +100,7 @@
  },
  {
   "id": "11-man-red-box",
-  "file": null,
-  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "file": "stills/11-strange_sounds2.png",
   "shows": "dark-haired man in white shirt and braces holding a red instrument box with a cable, standing in wheat under big clouds",
   "characters": [
    "seismologist"
@@ -111,8 +110,7 @@
  },
  {
   "id": "12-man-smoke-column",
-  "file": null,
-  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "file": "stills/12-plume_of_smoke2.png",
   "shows": "the same man from behind in wheat facing a huge column of smoke rising from the field",
   "characters": [
    "seismologist"
@@ -122,8 +120,7 @@
  },
  {
   "id": "13-woman-burnt-field",
-  "file": null,
-  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "file": "stills/14-found_in_burning_field.png",
   "shows": "woman in a white dress walking alone through a smouldering burnt strip of wheat, seen from above",
   "characters": [
    "woman"
@@ -133,8 +130,7 @@
  },
  {
   "id": "14-woman-wheat-portrait",
-  "file": null,
-  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "file": "stills/14-found_in_burning_field4.png",
   "shows": "red-haired woman close up in wheat against a black storm sky, looking at us",
   "characters": [
    "woman"
@@ -188,12 +184,12 @@
    "seismologist"
   ],
   "mood": "resolve, ready to fight",
-  "motion": "breath, eyes lift"
+  "motion": "breath, eyes lift",
+  "hires": "stills/20-I_will_face4.png"
  },
  {
   "id": "20-welder-helmet",
-  "file": null,
-  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "file": "stills/22-helmet3.png",
   "shows": "close-up of the hero's eyes through the slot of a battered blue-grey welder's helmet, flat orange-red background",
   "characters": [
    "seismologist"
@@ -203,8 +199,7 @@
  },
  {
   "id": "21-man-shotgun",
-  "file": null,
-  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "file": "stills/23-gun.png",
   "shows": "man in dark jacket and white shirt holding a shotgun against a golden plank wall, scorch marks at its foot",
   "characters": [
    "farmhand"
@@ -402,8 +397,7 @@
  },
  {
   "id": "36-man-runs-at-fire",
-  "file": null,
-  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "file": "stills/34-running_from_fire.png",
   "shows": "a small dark figure running toward a towering wall of fire across a dry field",
   "characters": [
    "seismologist"
@@ -413,8 +407,7 @@
  },
  {
   "id": "37-helmet-in-fire",
-  "file": null,
-  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "file": "stills/35-running_in_fire.png",
   "shows": "the helmeted man in a black coat striding through burning wheat, embers flying",
   "characters": [
    "seismologist"
@@ -424,8 +417,7 @@
  },
  {
   "id": "38-helmet-water-fire",
-  "file": null,
-  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "file": "stills/36-finding_water.png",
   "shows": "the helmeted man waist-deep in dark water, fire blooming behind him",
   "characters": [
    "seismologist"
@@ -435,8 +427,7 @@
  },
  {
   "id": "39-helmet-calm-water",
-  "file": null,
-  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "file": "stills/36b-waking_up.png",
   "shows": "the helmet, shoulders deep in still dark water, sunset glowing on its metal, ripples",
   "characters": [
    "seismologist"
@@ -446,8 +437,7 @@
  },
  {
   "id": "40-sword",
-  "file": null,
-  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "file": "stills/37-sword.png",
   "shows": "a long curved sword against swirling red-orange fire",
   "characters": [],
   "mood": "a new weapon",
@@ -455,8 +445,7 @@
  },
  {
   "id": "41-man-in-sunset-pool",
-  "file": null,
-  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "file": "stills/38-up_from_pool2.png",
   "shows": "a lone figure wading into a sunset pool on the plain",
   "characters": [
    "seismologist"
@@ -466,8 +455,7 @@
  },
  {
   "id": "42-helmet-sword-red-sky",
-  "file": null,
-  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "file": "stills/39-return_with_sword2.png",
   "shows": "the helmeted man in a long coat with a sword, red sky, on a rise",
   "characters": [
    "seismologist"
@@ -477,8 +465,7 @@
  },
  {
   "id": "43-dragon-face-off",
-  "file": null,
-  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "file": "stills/40-face_to_face_again.png",
   "shows": "the dragon rising with spread wings over the plain, red eyes; the man from behind with a sword",
   "characters": [
    "dragon",
@@ -495,7 +482,8 @@
    "woman"
   ],
   "mood": "waiting, longing",
-  "motion": "hair and grass stir"
+  "motion": "hair and grass stir",
+  "hires": "stills/43-into_the_sky_start.png"
  },
  {
   "id": "45-dragon-into-sun",
@@ -505,7 +493,8 @@
    "dragon"
   ],
   "mood": "departure, release",
-  "motion": "it climbs, the trail lengthens"
+  "motion": "it climbs, the trail lengthens",
+  "hires": "stills/43-into_the_sky_start2.png"
  },
  {
   "id": "46-trail-into-sun",
@@ -513,7 +502,8 @@
   "shows": "a pale column trail rising from the plain into the huge sun",
   "characters": [],
   "mood": "after it has gone",
-  "motion": "the trail drifts and thins"
+  "motion": "the trail drifts and thins",
+  "hires": "stills/43-into_the_sky.png"
  },
  {
   "id": "47-aerial-fields",
@@ -531,12 +521,12 @@
    "woman"
   ],
   "mood": "witness, farewell",
-  "motion": "the trail rises, her hair moves"
+  "motion": "the trail rises, her hair moves",
+  "hires": "stills/45_falling.png"
  },
  {
   "id": "49-glowing-pit",
-  "file": null,
-  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "file": "stills/46-crater2.png",
   "shows": "from above: a glowing red pit opened in the dark plain, smoke rising, under a burnt-orange sky",
   "characters": [
    "dragon (its lair)"
@@ -546,8 +536,7 @@
  },
  {
   "id": "50-man-in-fissure",
-  "file": null,
-  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "file": "stills/47-alive.png",
   "shows": "the coated man walking down into a fiery fissure of broken rock",
   "characters": [
    "seismologist"
@@ -557,8 +546,7 @@
  },
  {
   "id": "51-woman-storm-portrait",
-  "file": null,
-  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "file": "stills/50_lady_face5.png",
   "shows": "the red-haired woman close up, lit gold against a dark storm sky over wheat, worried",
   "characters": [
    "woman"
@@ -568,8 +556,7 @@
  },
  {
   "id": "52-man-dragon-smoke",
-  "file": null,
-  "note": "FILE NOT YET IN REPO (shared in chat only)",
+  "file": "stills/13-dragon_emerging3.jpeg",
   "shows": "the man in braces from behind in the wheat facing a vast black mass of smoke with dragon spines rising out of it",
   "characters": [
    "seismologist",
@@ -577,5 +564,16 @@
   ],
   "mood": "first sight of the dragon",
   "motion": "smoke rolls, spines emerge"
+ },
+ {
+  "id": "53-roar",
+  "file": "stills/41-roar.png",
+  "shows": "the black dragon's head close up, jaws open, teeth, red eye, against an orange sky",
+  "characters": [
+   "dragon"
+  ],
+  "mood": "the Beast in pain and fury (beat 41)",
+  "motion": "jaws open, smoke curls",
+  "note": "the most in-your-face still: keep it brief on screen for young viewers"
  }
 ]
