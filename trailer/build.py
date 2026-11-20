@@ -3,6 +3,7 @@
 and a placeholder sound bed made in code. Usage: python3 trailer/build.py [out.mp4]"""
 import json, os, re, subprocess, sys, wave
 import numpy as np
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -196,10 +197,6 @@ def render_audio(path):
         add(L, t, click(0.03), 0.5); t += max(0.07, 0.28 - 0.21 * (t - at('10-')) / 2.6)
     # 2. the sign: a crash, the drone, fire; a breath of silence before the bed
     boomat(at('12-'), 3.0, g=1.0)
-    d = (np.sin(2 * np.pi * 55 * tt) + 0.6 * np.sin(2 * np.pi * 82.4 * tt) + 0.3 * np.sin(2 * np.pi * 110.5 * tt))
-    d *= 0.75 + 0.25 * np.sin(2 * np.pi * 0.2 * tt)
-    m = np.clip((tt - at('12-', .5)) / 4, 0, 1) * (tt < at('36b')) + np.clip((tt - at('37-')) / 2, 0, 1) * (tt < at('29-')) * 0.6
-    L += 0.18 * d * m
     add(L, at('14-'), lowpass(noise(3.0), 2500) * env(int(3.0 * SR), 0.1, 0.5), 0.35)          # fire crackle
     a, b = int((at('17-') - 0.5) * SR), int(at('17-') * SR)
     L[a:b] *= np.linspace(1, 0, b - a) ** 2
@@ -207,12 +204,9 @@ def render_audio(path):
         t = t0
         while t < t1:
             boomat(t, 0.5, 60, 40, g=g); boomat(t + 0.22, 0.4, 55, 38, g=g * 0.6); t += period
-    beat(at('17-'), at('22-'), 1.1, 0.6)                                                        # heartbeat
     # 3. the gear: visor, shells, the breech; the beat drops into the fire
     add(L, at('22-', 0.05), click(0.08) * 3, 0.8); boomat(at('22-', 0.12), 0.4, 300, 120, g=0.4)
     add(L, at('30-', 0.1), click(0.05), 0.8); add(L, at('30-', 0.4), click(0.05), 0.8); add(L, at('30-', 0.75), click(0.07) * 2, 1.0)
-    beat(at('22-'), at('25-'), 0.75, 0.7)
-    beat(at('25-'), at('36-', 0.9), 0.4, 0.85)
     fd = at('36-') - at('34-'); fr = lowpass(noise(fd), 900) * env(int(fd * SR), 0.6, 0.4); add(L, at('34-'), fr, 0.8)  # fire roar
     sp = lowpass(noise(0.6), 1500) * env(int(0.6 * SR), 0.01, 0.4); add(L, at('36-', 0.1), sp, 0.7)  # splash and hiss
     # 4. the hold: silence, drips, the low note, the title hit
@@ -231,8 +225,21 @@ def render_audio(path):
     L[a:b] *= np.linspace(1.4, 2.4, b - a)                   # the fire run is the loudest part
     duck = (np.abs(V) > 0.02).astype(float)
     k = int(0.3 * SR); duck = np.convolve(duck, np.ones(k) / k, 'same').clip(0, 1)
-    M = L * (1 - 0.55 * duck) + V
-    M /= max(1e-9, np.abs(M).max()) / 0.9
+    from score import score
+    S = score(at, n)                                          # the music: trailer/score.py
+    for a0, b0 in ((at('04-', 2.2), at('17-')), (at('36-', 0.95), at('36b'))):   # dead silence in the two blacks
+        a, b = int(a0 * SR), int(b0 * SR); f = int(0.08 * SR)
+        S[a:a + f] *= np.linspace(1, 0, f); S[a + f:b] = 0
+    # a loudness shape like a big trailer's: steady under the voice, loudest in the fire, big again at the end
+    G = np.ones(n)
+    def ramp(t0, t1, g0, g1):
+        a, b = int(t0 * SR), int(t1 * SR); G[a:b] = np.linspace(g0, g1, b - a)
+    ramp(at('34-'), at('36-', 0.95), 1.9, 2.4)
+    ramp(at('39-'), at('39-', 2.8), 1.7, 1.2)
+    ramp(at('29-', 1.0), at('29-', 4.0), 1.8, 1.3); ramp(at('29-', 4.0), n / SR, 1.3, 1.0)
+    M = (L * (1 - 0.5 * duck) + 0.6 * S * (1 - 0.45 * duck)) * G + V
+    M /= max(1e-9, np.percentile(np.abs(M), 99.95)) / 0.75
+    M = np.tanh(1.3 * M) / np.tanh(1.3) * 0.85                # a soft limiter: loud, never clipped
     pcm = (np.stack([M, M], 1) * 32767).astype('<i2')
     with wave.open(path, 'wb') as f:
         f.setnchannels(2); f.setsampwidth(2); f.setframerate(SR); f.writeframes(pcm.tobytes())
