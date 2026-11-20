@@ -116,7 +116,7 @@ def score(at, n):
         put(S, t0, organ(ch, t1 - t0 + .3, att=.6, rel=.3), .4 + .05 * i)
     put(S, at('46-'), pulse('A1', at('22-') - at('46-'), .6), .25)
     put(S, at('22-'), pulse('A1', at('34-') - at('22-'), .3), .35)
-    rd = at('34-') - at('30-')
+    rd = at('34-', -1.2) - at('30-')      # the riser cuts off into the dead drop before the fire
     put(S, at('30-'), shepard(rd), .45)
     # 4. the fire: the biggest braam, drums, a fast ostinato, organ at full
     t0, t1 = at('34-'), at('36-', .95)

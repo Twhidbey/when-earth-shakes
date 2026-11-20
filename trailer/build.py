@@ -219,6 +219,16 @@ def render_audio(path):
     cr = np.zeros(int(5 * SR))
     for k in rng.integers(0, len(cr) - 400, 70): cr[k:k + 200] += click(200 / SR)
     add(L, at('29-', 1.5), cr * np.linspace(1, 0, len(cr)), 0.2)
+    # a hit on every cut from the crash to the drop, strong and soft by turns (as the reference does)
+    names = [s['file'] for s in E['shots']]
+    i0, i1 = names.index([f for f in names if f.startswith('12-')][0]), names.index([f for f in names if f.startswith('34-')][0])
+    for j, s in enumerate(E['shots'][i0 + 1:i1]):
+        w = lowpass(noise(0.35), 1200) * np.linspace(0, 1, int(0.35 * SR)) ** 3
+        add(L, s['start'] - 0.35, w, 0.35)
+        boomat(s['start'], 0.8, 75, 38, g=0.75 if j % 2 == 0 else 0.45)
+    for a0, b0 in ((at('34-', -1.2), at('34-')), (at('29-', -1.0), at('29-', 0.9))):     # the drops are dead quiet
+        a, b = int(a0 * SR), int(b0 * SR); f = int(0.06 * SR)
+        L[a:a + f] *= np.linspace(1, 0, f); L[a + f:b] = 0
     # mix: the bed ducks under the voice
     L /= max(1e-9, np.abs(L).max()) / 0.6
     a, b = int(at('25-', 0.5) * SR), int(at('36-', 0.95) * SR)
@@ -227,7 +237,7 @@ def render_audio(path):
     k = int(0.3 * SR); duck = np.convolve(duck, np.ones(k) / k, 'same').clip(0, 1)
     from score import score
     S = score(at, n)                                          # the music: trailer/score.py
-    for a0, b0 in ((at('04-', 2.2), at('17-')), (at('36-', 0.95), at('36b'))):   # dead silence in the two blacks
+    for a0, b0 in ((at('04-', 2.2), at('17-')), (at('34-', -1.2), at('34-')), (at('36-', 0.95), at('36b')), (at('29-', -1.0), at('29-', 0.9))):   # dead silence in the blacks
         a, b = int(a0 * SR), int(b0 * SR); f = int(0.08 * SR)
         S[a:a + f] *= np.linspace(1, 0, f); S[a + f:b] = 0
     # a loudness shape like a big trailer's: steady under the voice, loudest in the fire, big again at the end

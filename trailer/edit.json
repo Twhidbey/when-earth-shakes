@@ -6,8 +6,8 @@
  ],
  "show_text": false,
  "vo_speed": 1.1,
- "end": 52.3,
- "note": "Rough cut 5: slow pull-outs on the big moments, a slow pan across the wall of fire; quick, no dragon on screen, more land and sky, fewer faces. Each shot: file, start, dur (s), move from/to [cx, cy, zoom] (zoom 1 = full width), fade in/out, text = the verse (recorded in trailer/voice/), vo = seconds after the shot starts that the voice begins; vo_speed speeds the voice without changing its pitch. Sound cues in build.py are tied to shots by file name.",
+ "end": 54.1,
+ "note": "Rough cut 7: paced on the reference (a hit on every cut, a dead drop before the fire, a pause before the title); slow pull-outs on the big moments, a slow pan across the wall of fire; quick, no dragon on screen, more land and sky, fewer faces. Each shot: file, start, dur (s), move from/to [cx, cy, zoom] (zoom 1 = full width), fade in/out, text = the verse (recorded in trailer/voice/), vo = seconds after the shot starts that the voice begins; vo_speed speeds the voice without changing its pitch. Sound cues in build.py are tied to shots by file name.",
  "shots": [
   {
    "file": "05-hand-wheat.webp",
@@ -295,7 +295,7 @@
   },
   {
    "file": "34-running_from_fire.png",
-   "start": 31.1,
+   "start": 32.3,
    "dur": 4.0,
    "from": [
     0.28,
@@ -312,7 +312,7 @@
   },
   {
    "file": "35-running_in_fire.png",
-   "start": 35.1,
+   "start": 36.3,
    "dur": 1.4,
    "from": [
     0.55,
@@ -329,7 +329,7 @@
   },
   {
    "file": "36-finding_water.png",
-   "start": 36.5,
+   "start": 37.7,
    "dur": 1.0,
    "from": [
     0.5,
@@ -346,7 +346,7 @@
   },
   {
    "file": "36b-waking_up.png",
-   "start": 38.1,
+   "start": 39.3,
    "dur": 1.5,
    "from": [
     0.55,
@@ -366,7 +366,7 @@
   },
   {
    "file": "38-up_from_pool2.png",
-   "start": 39.6,
+   "start": 40.8,
    "dur": 1.4,
    "from": [
     0.5,
@@ -383,7 +383,7 @@
   },
   {
    "file": "37-sword.png",
-   "start": 41.0,
+   "start": 42.2,
    "dur": 1.9,
    "from": [
     0.35,
@@ -400,7 +400,7 @@
   },
   {
    "file": "39-return_with_sword2.png",
-   "start": 42.9,
+   "start": 44.1,
    "dur": 3.0,
    "from": [
     0.52,
@@ -417,7 +417,7 @@
   },
   {
    "file": "29-fire-smoke-abstract.webp",
-   "start": 46.3,
+   "start": 48.1,
    "dur": 6.0,
    "from": [
     0.5,
