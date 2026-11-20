@@ -145,11 +145,34 @@ def click(d=0.05, fc=3000):
     return noise(d) * np.exp(-tt * 120) * 0.6
 
 def at(name, off=0.0):
-    """time of a shot's start (by the start of its file name) plus an offset: sound cues follow the shots"""
+    """time of a cue (a story moment marked in edit.json) or of the first shot whose file starts with name"""
+    for s in E['shots']:
+        if s.get('cue') == name:
+            return s['start'] + off
     for s in E['shots']:
         if s['file'].startswith(name):
             return s['start'] + off
     raise KeyError(name)
+
+def end_of(name):
+    for s in E['shots']:
+        if s.get('cue') == name:
+            return s['start'] + s['dur']
+    raise KeyError(name)
+
+def rec(name, speed=1.0):
+    """a real recording from trailer/sfx (see its CREDITS.md), optionally slowed (lower and bigger)"""
+    raw = subprocess.run(['ffmpeg', '-loglevel', 'error', '-i', os.path.join(HERE, 'sfx', name), '-af',
+                          f'asetrate={int(SR * speed)},aresample={SR}', '-ac', '1', '-f', 'f32le', '-'],
+                         capture_output=True, check=True).stdout
+    x = np.frombuffer(raw, dtype='<f4').astype(float)
+    return x / max(1e-9, np.abs(x).max())
+
+def loop(x, d, fade=0.4):
+    n = int(d * SR); out = np.zeros(n); i = 0
+    while i < n:
+        k = min(len(x), n - i); out[i:i + k] += x[:k]; i += k
+    return out * env(n, fade, fade)
 
 def voice(text):
     """a recorded line, made to sound like an old radio: narrow band, a little drive, warm"""
@@ -163,18 +186,16 @@ def voice(text):
 
 def render_audio(path):
     n = int(END * SR)
-    L = np.zeros(n)          # sound bed
+    L = np.zeros(n)          # sound effects
     V = np.zeros(n)          # voice
-    tt = np.arange(n) / SR
     def add(buf, t, x, g=1.0):
         i = int(t * SR); j = min(len(buf), i + len(x))
         if j > i: buf[i:j] += g * x[:j - i]
     def boomat(t, *a, g=1.0): add(L, t, boom(*a), g)
-    # voice lines, each with a faint radio hum and crackle under it
+    # the voice, each line with a faint radio hum and crackle under it
     for s in E['shots']:
         if 'vo' in s:
-            v = voice(s['text'])
-            v = v / max(1e-9, np.abs(v).max()) * 0.9
+            v = voice(s['text']); v = v / max(1e-9, np.abs(v).max()) * 0.9
             t0 = s['start'] + s['vo']
             k = np.arange(len(v) + int(0.6 * SR)) / SR
             hum = 0.012 * (np.sin(2 * np.pi * 60 * k) + 0.5 * np.sin(2 * np.pi * 120 * k))
@@ -183,71 +204,56 @@ def render_audio(path):
                 cr[q:q + 200] += click(200 / SR) * rng.uniform(0.1, 0.5)
             add(V, t0 - 0.2, hum * env(len(k), 0.15, 0.3) + 0.08 * cr)
             add(V, t0, v)
-    # 1. the hush: a radio tuning in, wind, a rumble rising, the needle ticking
+    # opening: a radio tuning in, then wind over the fields
     st = lowpass(noise(1.2), 3500) - lowpass(noise(1.2), 400)
     tun = np.sin(2 * np.pi * np.cumsum(900 + 700 * np.sin(np.linspace(0, 3, len(st)))) / SR) * 0.08
-    add(L, 0.0, (st * 0.5 + tun) * env(len(st), 0.05, 0.4), 0.6)
-    a1 = at('12-')
-    w = lowpass(noise(a1), 500) * (0.6 + 0.4 * np.sin(np.linspace(0, 5, int(a1 * SR))))
-    add(L, 0.6, w * env(len(w), 1.0, 0.3), 0.5)
-    r0 = at('47-'); r = lowpass(lowpass(noise(a1 - r0), 60), 60); r /= np.abs(r).max()
-    add(L, r0, r * np.linspace(0.1, 1, len(r)), 0.9)
-    t, t1 = at('10-', 0.1), at('01-', 1.1)
-    while t < t1:
-        add(L, t, click(0.03), 0.5); t += max(0.07, 0.28 - 0.21 * (t - at('10-')) / 2.6)
-    # 2. the sign: a crash, the drone, fire; a breath of silence before the bed
-    boomat(at('12-'), 3.0, g=1.0)
-    add(L, at('14-'), lowpass(noise(3.0), 2500) * env(int(3.0 * SR), 0.1, 0.5), 0.35)          # fire crackle
-    a, b = int((at('17-') - 0.5) * SR), int(at('17-') * SR)
-    L[a:b] *= np.linspace(1, 0, b - a) ** 2
-    def beat(t0, t1, period, g):
-        t = t0
-        while t < t1:
-            boomat(t, 0.5, 60, 40, g=g); boomat(t + 0.22, 0.4, 55, 38, g=g * 0.6); t += period
-    # 3. the gear: visor, shells, the breech; the beat drops into the fire
-    add(L, at('22-', 0.05), click(0.08) * 3, 0.8); boomat(at('22-', 0.12), 0.4, 300, 120, g=0.4)
-    add(L, at('30-', 0.1), click(0.05), 0.8); add(L, at('30-', 0.4), click(0.05), 0.8); add(L, at('30-', 0.75), click(0.07) * 2, 1.0)
-    fd = at('36-') - at('34-'); fr = lowpass(noise(fd), 900) * env(int(fd * SR), 0.6, 0.4); add(L, at('34-'), fr, 0.8)  # fire roar
-    sp = lowpass(noise(0.6), 1500) * env(int(0.6 * SR), 0.01, 0.4); add(L, at('36-', 0.1), sp, 0.7)  # splash and hiss
-    # 4. the hold: silence, drips, the low note, the title hit
-    a, b = int((at('36-', 0.95)) * SR), int(at('37-', 0.3) * SR)
-    L[a:b] = 0
-    for o in (0.4, 1.2, 1.7):
-        add(L, at('36b', o), np.sin(2 * np.pi * np.linspace(1400, 700, 2000).cumsum() / SR) * np.exp(-np.arange(2000) / 300), 0.25)
-    boomat(at('39-'), 3.0, 45, 30, g=0.8)
-    boomat(at('29-', 1.0), 5.0, 60, 25, g=1.0)
-    cr = np.zeros(int(5 * SR))
-    for k in rng.integers(0, len(cr) - 400, 70): cr[k:k + 200] += click(200 / SR)
-    add(L, at('29-', 1.5), cr * np.linspace(1, 0, len(cr)), 0.2)
-    # a hit on every cut from the crash to the drop, strong and soft by turns (as the reference does)
-    names = [s['file'] for s in E['shots']]
-    i0, i1 = names.index([f for f in names if f.startswith('12-')][0]), names.index([f for f in names if f.startswith('34-')][0])
+    add(L, 0.0, (st * 0.5 + tun) * env(len(st), 0.05, 0.4), 0.5)
+    d = at('crash') - 0.6
+    w = lowpass(noise(d), 500) * (0.6 + 0.4 * np.sin(np.linspace(0, 5, int(d * SR))))
+    add(L, 0.6, w * env(len(w), 1.0, 0.3), 0.4)
+    # the crash: two real explosions, one slowed right down for size
+    ex_a, ex_b = rec('explosion-a.flac'), rec('explosion-b.flac')
+    add(L, at('crash'), rec('explosion-a.flac', 0.55), 1.0)
+    add(L, at('crash', 0.05), ex_b, 0.5)
+    # real grass fire: a quiet bed from the burning field, swelling at the boy, roaring through the fire run
+    fire, fire_lo = rec('grass-fire.flac'), rec('grass-fire.flac', 0.5)
+    t0 = at('14-'); d = at('rise') - t0
+    add(L, t0, loop(fire, d, 0.5) * np.linspace(0.3, 0.8, int(d * SR)), 0.6)
+    add(L, t0, loop(fire_lo, d, 0.5), 0.35)
+    t0, t1 = at('fire'), at('water', 0.3)
+    add(L, t0, loop(fire, t1 - t0, 0.15), 0.9)
+    add(L, t0, loop(fire_lo, t1 - t0, 0.15), 0.8)
+    add(L, t0, rec('explosion-a.flac', 0.45), 0.9)                     # the fire bursts up
+    add(L, at('35-'), ex_a, 0.5)
+    # into the water: the fire cut off under a deep slowed hit
+    add(L, at('water'), rec('explosion-b.flac', 0.35), 0.6)
+    # the title: a slowed explosion under the final boom, a breath of fire after it
+    add(L, at('title', 1.0), rec('explosion-a.flac', 0.4), 0.8)
+    add(L, at('title', 1.5), loop(fire_lo, END - at('title', 1.5), 1.5), 0.25)
+    # a hit on every cut from the crash to the fire, strong and soft by turns
+    i0 = [k for k, s in enumerate(E['shots']) if s.get('cue') == 'crash'][0]
+    i1 = [k for k, s in enumerate(E['shots']) if s.get('cue') == 'fire'][0]
     for j, s in enumerate(E['shots'][i0 + 1:i1]):
         w = lowpass(noise(0.35), 1200) * np.linspace(0, 1, int(0.35 * SR)) ** 3
-        add(L, s['start'] - 0.35, w, 0.35)
-        boomat(s['start'], 0.8, 75, 38, g=0.75 if j % 2 == 0 else 0.45)
-    for a0, b0 in ((at('34-', -1.2), at('34-')), (at('29-', -1.0), at('29-', 0.9))):     # the drops are dead quiet
-        a, b = int(a0 * SR), int(b0 * SR); f = int(0.06 * SR)
-        L[a:a + f] *= np.linspace(1, 0, f); L[a + f:b] = 0
-    # mix: the bed ducks under the voice
-    L /= max(1e-9, np.abs(L).max()) / 0.6
-    a, b = int(at('25-', 0.5) * SR), int(at('36-', 0.95) * SR)
-    L[a:b] *= np.linspace(1.4, 2.4, b - a)                   # the fire run is the loudest part
+        add(L, s['start'] - 0.35, w, 0.3)
+        boomat(s['start'], 0.8, 75, 38, g=0.7 if j % 2 == 0 else 0.4)
+    # the drop before the fire: effects go silent (the music keeps playing, low)
+    a, b = int(end_of('gear') * SR), int(at('fire') * SR)
+    a = int(at('fire', -0.8) * SR); f = int(0.05 * SR)
+    L[a:a + f] *= np.linspace(1, 0, f); L[a + f:b] = 0
+    # the music (trailer/score.py), never silent
+    from score import score
+    S = score(at, end_of, n)
     duck = (np.abs(V) > 0.02).astype(float)
     k = int(0.3 * SR); duck = np.convolve(duck, np.ones(k) / k, 'same').clip(0, 1)
-    from score import score
-    S = score(at, n)                                          # the music: trailer/score.py
-    for a0, b0 in ((at('04-', 2.2), at('17-')), (at('34-', -1.2), at('34-')), (at('36-', 0.95), at('36b')), (at('29-', -1.0), at('29-', 0.9))):   # dead silence in the blacks
-        a, b = int(a0 * SR), int(b0 * SR); f = int(0.08 * SR)
-        S[a:a + f] *= np.linspace(1, 0, f); S[a + f:b] = 0
-    # a loudness shape like a big trailer's: steady under the voice, loudest in the fire, big again at the end
     G = np.ones(n)
     def ramp(t0, t1, g0, g1):
         a, b = int(t0 * SR), int(t1 * SR); G[a:b] = np.linspace(g0, g1, b - a)
-    ramp(at('34-'), at('36-', 0.95), 1.9, 2.4)
-    ramp(at('39-'), at('39-', 2.8), 1.7, 1.2)
-    ramp(at('29-', 1.0), at('29-', 4.0), 1.8, 1.3); ramp(at('29-', 4.0), n / SR, 1.3, 1.0)
-    M = (L * (1 - 0.5 * duck) + 0.6 * S * (1 - 0.45 * duck)) * G + V
+    ramp(at('fire'), at('water'), 1.9, 2.3)
+    ramp(at('walk'), at('walk', 2.4), 1.5, 1.2)
+    ramp(at('title', 1.0), at('title', 4.0), 1.8, 1.3); ramp(at('title', 4.0), END, 1.3, 1.0)
+    L /= max(1e-9, np.abs(L).max()) / 0.6
+    M = (L * (1 - 0.45 * duck) + 0.65 * S * (1 - 0.45 * duck)) * G + V
     M /= max(1e-9, np.percentile(np.abs(M), 99.95)) / 0.75
     M = np.tanh(1.3 * M) / np.tanh(1.3) * 0.85                # a soft limiter: loud, never clipped
     pcm = (np.stack([M, M], 1) * 32767).astype('<i2')

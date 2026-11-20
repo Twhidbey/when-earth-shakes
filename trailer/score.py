@@ -93,49 +93,49 @@ def reverb(x, secs=2.2, wet=.35):
     y /= max(1e-9, np.abs(y).max()) / max(1e-9, np.abs(x).max())
     return (1 - wet) * x + wet * y
 
-def score(at, n):
+def score(at, end_of, n):
+    """at(cue, offset) and end_of(cue) come from edit.json, so the music follows the cut"""
     S = np.zeros(n)
-    # 1. the hush: a low organ A rises from nothing; one high pipe joins
-    put(S, at('05-'), organ(['A2', 'E3'], at('12-') - at('05-') + .4, att=5, rel=.6), .35)
-    put(S, at('10-'), organ(['E5'], at('12-') - at('10-') + .3, att=1.4, rel=.5), .12)
-    # 2. the sign: first braam on the crash, organ chords swelling, cut dead before the black
-    put(S, at('12-'), braam(4.5, .7), .55)
-    end2 = at('04-') + 2.2
-    seq = [(['A2', 'C3', 'E3', 'A3'], at('12-')), (['F2', 'A2', 'C3', 'F3'], at('15-')),
-           (['C3', 'E3', 'G3', 'C4'], at('14-')), (['E2', 'G#2', 'B2', 'E3'], at('04-'))]
-    for i, (ch, t0) in enumerate(seq):
-        t1 = seq[i + 1][1] if i + 1 < len(seq) else end2
-        put(S, t0, organ(ch, t1 - t0 + .25, att=.8, rel=.25), .35 + .1 * i)
-    # 3. the rise: braam on the burnt village, a low pulse quickening, the riser into the fire
-    put(S, at('17-'), braam(5.0, .9), .7)
-    seq = [(['A2', 'C3', 'E3', 'A3'], at('17-')), (['F2', 'A2', 'C3', 'F3'], at('46-')),
-           (['C3', 'E3', 'G3', 'C4'], at('18-')), (['G2', 'B2', 'D3', 'G3'], at('44-')),
-           (['A2', 'C3', 'E3', 'A3'], at('22-')), (['F2', 'A2', 'C3', 'F3'], at('24-'))]
-    for i, (ch, t0) in enumerate(seq):
-        t1 = seq[i + 1][1] if i + 1 < len(seq) else at('34-')
-        put(S, t0, organ(ch, t1 - t0 + .3, att=.6, rel=.3), .4 + .05 * i)
-    put(S, at('46-'), pulse('A1', at('22-') - at('46-'), .6), .25)
-    put(S, at('22-'), pulse('A1', at('34-') - at('22-'), .3), .35)
-    rd = at('34-', -1.2) - at('30-')      # the riser cuts off into the dead drop before the fire
-    put(S, at('30-'), shepard(rd), .45)
-    # 4. the fire: the biggest braam, drums, a fast ostinato, organ at full
-    t0, t1 = at('34-'), at('36-', .95)
+    T = n / SR
+    def chords(seq, t_end, g0, step):
+        for i, (ch, t0) in enumerate(seq):
+            t1 = seq[i + 1][1] if i + 1 < len(seq) else t_end
+            put(S, t0, organ(ch, t1 - t0 + .3, att=.5, rel=.3), g0 + step * i)
+    Am, F, C, G, E = ['A2', 'C3', 'E3', 'A3'], ['F2', 'A2', 'C3', 'F3'], ['C3', 'E3', 'G3', 'C4'], ['G2', 'B2', 'D3', 'G3'], ['E2', 'G#2', 'B2', 'E3']
+    # under everything, start to end: a low organ A that never stops
+    put(S, .3, organ(['A1', 'E2', 'A2'], T - .3, att=3.0, rel=2.5), .22)
+    # the hush
+    put(S, at('open'), organ(['E3', 'A3'], at('crash') - at('open') + .3, att=2.5, rel=.3), .25)
+    put(S, at('10-'), organ(['E5'], at('crash') - at('10-') + .2, att=1.0, rel=.3), .1)
+    # the sign
+    put(S, at('crash'), braam(4.5, .7), .55)
+    chords([(Am, at('crash')), (F, at('15-')), (C, at('14-')), (E, at('boyfire'))], at('rise'), .35, .08)
+    # the rise
+    put(S, at('rise'), braam(5.0, .9), .7)
+    chords([(Am, at('rise')), (F, at('46-')), (C, at('34-')), (G, at('30-')), (Am, at('gear')), (F, at('44-'))], at('fire', -.8), .4, .05)
+    put(S, at('46-'), pulse('A1', at('gear') - at('46-'), .6), .25)
+    put(S, at('gear'), pulse('A1', at('fire', -.8) - at('gear'), .3), .35)
+    put(S, at('30-'), shepard(at('fire', -.8) - at('30-')), .45)
+    # the drop: only a held high note over the low bed, pulled in toward the hit
+    put(S, at('fire', -.8), organ(['E4', 'A4'], .8, att=.7, rel=.02), .3)
+    # the fire
+    t0, t1 = at('fire'), at('water')
     put(S, t0, braam(5.5, 1.2), 1.0)
     put(S, at('35-'), braam(3.5, 1.0), .6)
     k = 0
     while t0 + k * .6 < t1:
         put(S, t0 + k * .6, hit(1.0 if k % 2 == 0 else .6), .9); k += 1
     put(S, t0, pulse('A2', t1 - t0, .15), .35)
-    put(S, t0, organ(['A2', 'C3', 'E3', 'A3', 'E4'], at('35-') - t0 + .2, att=.3, rel=.2), .55)
-    put(S, at('35-'), organ(['F2', 'A2', 'C3', 'F3', 'C4'], t1 - at('35-'), att=.2, rel=.05), .6)
-    # 5. the sword: after the silence, a high quiet organ; a riser; the last braam lands as he walks away
-    put(S, at('36b'), organ(['A4', 'C5', 'E5'], at('37-') - at('36b') + .4, att=1.2, rel=.5), .2)
-    put(S, at('37-'), organ(['F3', 'A3', 'C4', 'F4'], at('39-') - at('37-') + .2, att=1.0, rel=.2), .35)
-    put(S, at('37-'), shepard(at('39-') - at('37-')), .35)
-    put(S, at('39-'), braam(4.0, 1.0), .85)
-    put(S, at('39-'), organ(['C3', 'E3', 'G3', 'C4', 'G4'], at('29-') - at('39-') - .2, att=.3, rel=1.0), .5)
-    # 6. title: one final braam and a long A that rings out
-    put(S, at('29-', 1.0), braam(6.0, 1.1), 1.0)
-    put(S, at('29-', 1.0), organ(['A1', 'A2', 'E3', 'A3'], n / SR - at('29-', 1.0), att=.4, rel=3.0), .5)
+    put(S, t0, organ(Am + ['E4'], at('35-') - t0 + .2, att=.3, rel=.2), .55)
+    put(S, at('35-'), organ(F + ['C4'], t1 - at('35-') + .3, att=.2, rel=.3), .6)
+    # the water and the sword: quiet and high, then rising
+    put(S, at('water'), organ(['A4', 'C5', 'E5'], at('sword') - at('water') + .4, att=1.0, rel=.5), .22)
+    put(S, at('sword'), organ(['F3', 'A3', 'C4', 'F4'], at('walk') - at('sword') + .2, att=.8, rel=.2), .35)
+    put(S, at('sword'), shepard(at('walk') - at('sword')), .35)
+    put(S, at('walk'), braam(4.0, 1.0), .85)
+    put(S, at('walk'), organ(['C3', 'E3', 'G3', 'C4', 'G4'], at('title', 1.0) - at('walk'), att=.3, rel=.6), .5)
+    # the title
+    put(S, at('title', 1.0), braam(6.0, 1.1), 1.0)
+    put(S, at('title', 1.0), organ(['A1', 'A2', 'E3', 'A3'], T - at('title', 1.0), att=.4, rel=3.0), .5)
     S = reverb(S)
     return S / max(1e-9, np.abs(S).max())

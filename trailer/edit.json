@@ -6,33 +6,13 @@
  ],
  "show_text": false,
  "vo_speed": 1.1,
- "end": 54.1,
- "note": "Rough cut 7: paced on the reference (a hit on every cut, a dead drop before the fire, a pause before the title); slow pull-outs on the big moments, a slow pan across the wall of fire; quick, no dragon on screen, more land and sky, fewer faces. Each shot: file, start, dur (s), move from/to [cx, cy, zoom] (zoom 1 = full width), fade in/out, text = the verse (recorded in trailer/voice/), vo = seconds after the shot starts that the voice begins; vo_speed speeds the voice without changing its pitch. Sound cues in build.py are tied to shots by file name.",
+ "end": 43.2,
+ "note": "Rough cut 8: fewer people, quick switches, music the whole way, real fire and explosions. Each shot: file, start, dur (s), move from/to [cx, cy, zoom] (zoom 1 = full width; the same picture may appear twice, cropped differently), fade in/out, cue = a story moment the music and sound follow (build.py, score.py), text = the verse (recorded in trailer/voice/), vo = seconds after the shot starts that the voice begins.",
  "shots": [
   {
-   "file": "05-hand-wheat.webp",
-   "start": 1.0,
-   "dur": 2.2,
-   "from": [
-    0.45,
-    0.5,
-    1
-   ],
-   "to": [
-    0.52,
-    0.5,
-    1.08
-   ],
-   "fin": 0.8,
-   "fout": 0,
-   "text": "Canst thou draw out leviathan with an hook?",
-   "tref": "Job 41:1",
-   "vo": 0.2
-  },
-  {
    "file": "47-aerial-fields.webp",
-   "start": 3.2,
-   "dur": 1.4,
+   "start": 1.0,
+   "dur": 2.0,
    "from": [
     0.5,
     0.45,
@@ -41,49 +21,53 @@
    "to": [
     0.5,
     0.58,
-    1.15
+    1.18
    ],
-   "fin": 0,
-   "fout": 0
+   "fin": 0.8,
+   "fout": 0.0,
+   "cue": "open",
+   "vo": 0.3,
+   "text": "Canst thou draw out leviathan with an hook?",
+   "tref": "Job 41:1"
   },
   {
    "file": "10-car-plain.webp",
-   "start": 4.6,
-   "dur": 1.6,
+   "start": 3.0,
+   "dur": 1.0,
    "from": [
     0.42,
     0.62,
     1.25
    ],
    "to": [
-    0.5,
+    0.48,
     0.62,
     1.35
    ],
-   "fin": 0,
-   "fout": 0
+   "fin": 0.0,
+   "fout": 0.0
   },
   {
-   "file": "01-boy-house.webp",
-   "start": 6.2,
-   "dur": 1.2,
+   "file": "05-hand-wheat.webp",
+   "start": 4.0,
+   "dur": 1.0,
    "from": [
+    0.6,
     0.5,
-    0.45,
-    1.05
+    1.25
    ],
    "to": [
-    0.5,
-    0.42,
-    1.15
+    0.65,
+    0.48,
+    1.35
    ],
-   "fin": 0,
-   "fout": 0
+   "fin": 0.0,
+   "fout": 0.0
   },
   {
    "file": "12-plume_of_smoke2.png",
-   "start": 7.4,
-   "dur": 3.2,
+   "start": 5.0,
+   "dur": 1.6,
    "from": [
     0.56,
     0.45,
@@ -94,50 +78,85 @@
     0.5,
     1.0
    ],
-   "fin": 0,
-   "fout": 0,
+   "fin": 0.0,
+   "fout": 0.0,
+   "cue": "crash",
+   "vo": 0.6,
    "text": "Upon earth there is not his like, who is made without fear.",
-   "tref": "Job 41:33",
-   "vo": 0.4
+   "tref": "Job 41:33"
+  },
+  {
+   "file": "12-plume_of_smoke2.png",
+   "start": 6.6,
+   "dur": 0.9,
+   "from": [
+    0.86,
+    0.3,
+    2.3
+   ],
+   "to": [
+    0.88,
+    0.28,
+    2.5
+   ],
+   "fin": 0.0,
+   "fout": 0.0
   },
   {
    "file": "15-town-watches-smoke.webp",
-   "start": 10.6,
-   "dur": 2.6,
+   "start": 7.5,
+   "dur": 0.9,
    "from": [
-    0.62,
-    0.48,
-    1.6
+    0.66,
+    0.3,
+    2.0
    ],
    "to": [
-    0.5,
-    0.5,
-    1.0
+    0.66,
+    0.27,
+    2.2
    ],
-   "fin": 0,
-   "fout": 0
+   "fin": 0.0,
+   "fout": 0.0
   },
   {
    "file": "14-found_in_burning_field.png",
-   "start": 13.2,
-   "dur": 1.4,
+   "start": 8.4,
+   "dur": 1.0,
    "from": [
-    0.4,
+    0.5,
     0.55,
     1.2
    ],
    "to": [
-    0.38,
-    0.58,
-    1.3
+    0.52,
+    0.6,
+    1.35
    ],
-   "fin": 0,
-   "fout": 0
+   "fin": 0.0,
+   "fout": 0.0
+  },
+  {
+   "file": "29-fire-smoke-abstract.webp",
+   "start": 9.4,
+   "dur": 0.6,
+   "from": [
+    0.4,
+    0.5,
+    1.6
+   ],
+   "to": [
+    0.45,
+    0.5,
+    1.7
+   ],
+   "fin": 0.0,
+   "fout": 0.0
   },
   {
    "file": "04-boy-fire-field.webp",
-   "start": 14.6,
-   "dur": 2.2,
+   "start": 10.0,
+   "dur": 2.0,
    "from": [
     0.5,
     0.55,
@@ -148,13 +167,14 @@
     0.5,
     1.0
    ],
-   "fin": 0,
-   "fout": 0.2
+   "fin": 0.0,
+   "fout": 0.0,
+   "cue": "boyfire"
   },
   {
    "file": "17-burnt-village.webp",
-   "start": 17.3,
-   "dur": 1.8,
+   "start": 12.0,
+   "dur": 1.4,
    "from": [
     0.45,
     0.45,
@@ -165,16 +185,17 @@
     0.5,
     1.15
    ],
-   "fin": 0.3,
-   "fout": 0,
+   "fin": 0.0,
+   "fout": 0.0,
+   "cue": "rise",
+   "vo": 0.2,
    "text": "When he raiseth up himself, the mighty are afraid.",
-   "tref": "Job 41:25",
-   "vo": 0.2
+   "tref": "Job 41:25"
   },
   {
    "file": "46-crater2.png",
-   "start": 19.1,
-   "dur": 2.8,
+   "start": 13.4,
+   "dur": 2.2,
    "from": [
     0.5,
     0.64,
@@ -185,67 +206,30 @@
     0.5,
     1.0
    ],
-   "fin": 0,
-   "fout": 0
+   "fin": 0.0,
+   "fout": 0.0
   },
   {
-   "file": "18-crowd-doorway.webp",
-   "start": 21.9,
-   "dur": 1.2,
+   "file": "34-running_from_fire.png",
+   "start": 15.6,
+   "dur": 0.9,
    "from": [
-    0.45,
-    0.5,
-    1.05
+    0.25,
+    0.4,
+    1.8
    ],
    "to": [
-    0.55,
-    0.5,
-    1.1
+    0.3,
+    0.4,
+    1.9
    ],
-   "fin": 0,
-   "fout": 0
-  },
-  {
-   "file": "44-woman-red-field.webp",
-   "start": 23.1,
-   "dur": 1.8,
-   "from": [
-    0.55,
-    0.5,
-    1.0
-   ],
-   "to": [
-    0.6,
-    0.5,
-    1.1
-   ],
-   "fin": 0,
-   "fout": 0
-  },
-  {
-   "file": "22-helmet3.png",
-   "start": 24.9,
-   "dur": 1.0,
-   "from": [
-    0.5,
-    0.45,
-    1.25
-   ],
-   "to": [
-    0.5,
-    0.42,
-    1.4
-   ],
-   "fin": 0,
-   "fout": 0,
-   "text": "Lay thine hand upon him, remember the battle.",
-   "tref": "Job 41:8",
-   "vo": 0.2
+   "fin": 0.0,
+   "fout": 0.0
   },
   {
    "file": "30-man-rock-pile.webp",
-   "start": 25.9,
-   "dur": 2.6,
+   "start": 16.5,
+   "dur": 1.8,
    "from": [
     0.5,
     0.55,
@@ -256,30 +240,13 @@
     0.5,
     1.0
    ],
-   "fin": 0,
-   "fout": 0
-  },
-  {
-   "file": "24-handshake.webp",
-   "start": 28.5,
-   "dur": 1.0,
-   "from": [
-    0.5,
-    0.5,
-    1.1
-   ],
-   "to": [
-    0.5,
-    0.5,
-    1.2
-   ],
-   "fin": 0,
-   "fout": 0
+   "fin": 0.0,
+   "fout": 0.0
   },
   {
    "file": "25-helmet-field-a.webp",
-   "start": 29.5,
-   "dur": 1.6,
+   "start": 18.3,
+   "dur": 1.4,
    "from": [
     0.5,
     0.5,
@@ -290,13 +257,68 @@
     0.45,
     1.15
    ],
-   "fin": 0,
-   "fout": 0
+   "fin": 0.0,
+   "fout": 0.0,
+   "cue": "gear",
+   "vo": 0.2,
+   "text": "Lay thine hand upon him, remember the battle.",
+   "tref": "Job 41:8"
+  },
+  {
+   "file": "26-helmet-field-b.webp",
+   "start": 19.7,
+   "dur": 0.9,
+   "from": [
+    0.5,
+    0.3,
+    2.2
+   ],
+   "to": [
+    0.5,
+    0.28,
+    2.5
+   ],
+   "fin": 0.0,
+   "fout": 0.0
+  },
+  {
+   "file": "44-woman-red-field.webp",
+   "start": 20.6,
+   "dur": 1.0,
+   "from": [
+    0.55,
+    0.5,
+    1.0
+   ],
+   "to": [
+    0.6,
+    0.5,
+    1.1
+   ],
+   "fin": 0.0,
+   "fout": 0.0
+  },
+  {
+   "file": "14-found_in_burning_field.png",
+   "start": 21.6,
+   "dur": 1.2,
+   "from": [
+    0.7,
+    0.75,
+    1.6
+   ],
+   "to": [
+    0.6,
+    0.7,
+    1.8
+   ],
+   "fin": 0.0,
+   "fout": 0.0
   },
   {
    "file": "34-running_from_fire.png",
-   "start": 32.3,
-   "dur": 4.0,
+   "start": 23.6,
+   "dur": 3.6,
    "from": [
     0.28,
     0.5,
@@ -308,12 +330,13 @@
     1.5
    ],
    "fin": 0.0,
-   "fout": 0
+   "fout": 0.0,
+   "cue": "fire"
   },
   {
    "file": "35-running_in_fire.png",
-   "start": 36.3,
-   "dur": 1.4,
+   "start": 27.2,
+   "dur": 1.0,
    "from": [
     0.55,
     0.45,
@@ -324,12 +347,29 @@
     0.42,
     1.3
    ],
-   "fin": 0,
-   "fout": 0
+   "fin": 0.0,
+   "fout": 0.0
+  },
+  {
+   "file": "29-fire-smoke-abstract.webp",
+   "start": 28.2,
+   "dur": 0.7,
+   "from": [
+    0.6,
+    0.45,
+    1.5
+   ],
+   "to": [
+    0.62,
+    0.45,
+    1.7
+   ],
+   "fin": 0.0,
+   "fout": 0.0
   },
   {
    "file": "36-finding_water.png",
-   "start": 37.7,
+   "start": 28.9,
    "dur": 1.0,
    "from": [
     0.5,
@@ -341,13 +381,14 @@
     0.5,
     1.25
    ],
-   "fin": 0,
-   "fout": 0
+   "fin": 0.0,
+   "fout": 0.0,
+   "cue": "water"
   },
   {
    "file": "36b-waking_up.png",
-   "start": 39.3,
-   "dur": 1.5,
+   "start": 29.9,
+   "dur": 1.6,
    "from": [
     0.55,
     0.5,
@@ -358,33 +399,17 @@
     0.5,
     1.05
    ],
-   "fin": 0.5,
-   "fout": 0,
+   "fin": 0.0,
+   "fout": 0.0,
+   "cue": "wake",
+   "vo": 0.4,
    "text": "The sword of him that layeth at him cannot hold.",
-   "tref": "Job 41:26",
-   "vo": 0.5
-  },
-  {
-   "file": "38-up_from_pool2.png",
-   "start": 40.8,
-   "dur": 1.4,
-   "from": [
-    0.5,
-    0.5,
-    1.1
-   ],
-   "to": [
-    0.5,
-    0.48,
-    1.2
-   ],
-   "fin": 0,
-   "fout": 0
+   "tref": "Job 41:26"
   },
   {
    "file": "37-sword.png",
-   "start": 42.2,
-   "dur": 1.9,
+   "start": 31.5,
+   "dur": 1.6,
    "from": [
     0.35,
     0.65,
@@ -395,13 +420,31 @@
     0.45,
     1.3
    ],
-   "fin": 0,
-   "fout": 0
+   "fin": 0.0,
+   "fout": 0.0,
+   "cue": "sword"
+  },
+  {
+   "file": "38-up_from_pool2.png",
+   "start": 33.1,
+   "dur": 1.2,
+   "from": [
+    0.5,
+    0.5,
+    1.3
+   ],
+   "to": [
+    0.5,
+    0.5,
+    1.1
+   ],
+   "fin": 0.0,
+   "fout": 0.0
   },
   {
    "file": "39-return_with_sword2.png",
-   "start": 44.1,
-   "dur": 3.0,
+   "start": 34.3,
+   "dur": 2.4,
    "from": [
     0.52,
     0.55,
@@ -412,12 +455,13 @@
     0.5,
     1.0
    ],
-   "fin": 0,
-   "fout": 0.4
+   "fin": 0.0,
+   "fout": 0.0,
+   "cue": "walk"
   },
   {
    "file": "29-fire-smoke-abstract.webp",
-   "start": 48.1,
+   "start": 37.2,
    "dur": 6.0,
    "from": [
     0.5,
@@ -431,10 +475,11 @@
    ],
    "fin": 0.8,
    "fout": 1.6,
-   "text": "His heart is as firm as a stone.",
-   "tref": "Job 41:24",
+   "cue": "title",
    "vo": 2.0,
-   "title": "WHEN EARTH SHAKES"
+   "title": "WHEN EARTH SHAKES",
+   "text": "His heart is as firm as a stone.",
+   "tref": "Job 41:24"
   }
  ]
 }
