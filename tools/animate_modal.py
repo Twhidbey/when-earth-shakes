@@ -12,7 +12,7 @@ app = modal.App("when-earth-shakes-animate")
 cache = modal.Volume.from_name("wes-hf-cache", create_if_missing=True)
 image = (modal.Image.debian_slim(python_version="3.11")
          .apt_install("ffmpeg")
-         .pip_install("torch==2.5.1", "diffusers>=0.35.0", "transformers>=4.49", "accelerate", "ftfy",
+         .pip_install("torch==2.7.1", "diffusers>=0.35.0", "transformers>=4.49", "accelerate", "ftfy",
                       "imageio[ffmpeg]", "pillow", "sentencepiece")
          .env({"HF_HOME": "/cache"}))
 
