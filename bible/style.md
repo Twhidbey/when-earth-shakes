@@ -18,3 +18,8 @@ Shots the examples suggest for this story:
 - a beam or column of light rising from the dark plain, small figures beside it (the crater, the end)
 - the Lady in her white dress standing on the road, wind in her hair, smoke on the horizon behind
 - a figure aiming a shotgun, side on, on an empty road or ridge (beat 32)
+
+## Body proportions
+Slender and realistically proportioned, as in American realist painting: long legs, narrow shoulders, long limbs, about 8 heads tall.
+For the cards only, cropped bodies (shoulders down, no faces) from the owner's example paintings were given to the
+image model as a proportion reference, at the owner's request. They are not stored in the repo and are not reproduced.
