@@ -19,6 +19,8 @@ for a 5-year-old. The dragon ("the Beast") is black, intense but never in your f
 
 ## Next
 1. Animation test: two stills (12 smoke column, 34 running at the fire) on Modal: `modal run tools/animate_modal.py ...`.
+   Status (Nov 21): not run yet; MODAL_TOKEN_SECRET was still missing from the environment (only the ID is saved).
+   Script fixed: the 5B model now loads through WanImageToVideoPipeline (WanPipeline has no image input).
    Needs MODAL_TOKEN_ID / MODAL_TOKEN_SECRET (environment variables on the cloud environment; a session started
    after they were saved sees them). Free alternative: the Hugging Face Space r3gm/wan2-2-fp8da-aoti-preview (about 3 clips a day).
 2. Then: the trailer re-cut in story order, 12 to 14 animated shots of 3 to 5 s, the mother's and the Lady's lines as voice.

@@ -24,7 +24,7 @@ NEG = ("camera shake, zoom, cut, scene change, text, watermark, extra limbs, def
 @app.function(image=image, gpu="H100", volumes={"/cache": cache}, timeout=60 * 30)
 def generate(still: bytes, prompt: str, frames: int = 81, seed: int = 1, model: str = "5b") -> bytes:
     import torch
-    from diffusers import WanImageToVideoPipeline, WanPipeline
+    from diffusers import WanImageToVideoPipeline
     from diffusers.utils import export_to_video
     from PIL import Image
 
@@ -39,8 +39,8 @@ def generate(still: bytes, prompt: str, frames: int = 81, seed: int = 1, model: 
     else:
         nh = int(w / r); img = img.crop((0, (h - nh) // 2, w, (h - nh) // 2 + nh))
     img = img.resize((W, H), Image.LANCZOS)
-    Pipe = WanPipeline if model == "5b" else WanImageToVideoPipeline
-    pipe = Pipe.from_pretrained(name, torch_dtype=torch.bfloat16).to("cuda")
+    # both checkpoints load through the image-to-video pipeline (WanPipeline is text-only, no image input)
+    pipe = WanImageToVideoPipeline.from_pretrained(name, torch_dtype=torch.bfloat16).to("cuda")
     g = torch.Generator("cuda").manual_seed(seed)
     out = pipe(image=img, prompt=prompt, negative_prompt=NEG, height=H, width=W, num_frames=frames,
                guidance_scale=5.0, num_inference_steps=40 if model == "14b" else 50, generator=g).frames[0]
