@@ -10,4 +10,9 @@
 | The boy | C: long trousers, pale shirt | 04-boy-fire-field |
 | The year | 1930s for the main story; the boy's childhood about 1910 | |
 
-Style: still open (Bo Bartlett-style painted realism, or photographic realism).
+| The helmet (final) | the FIRST grey helmet: pale grey-tan steel, wide letterbox slot, dark cloth hood | cards/helmet.jpg |
+| The overcoat | long rust-brown wool, singed at the hem | cards/props.jpg |
+| The sword | the straight old sword: straight double-edged blade, plain iron cross-guard, cord grip, round pommel | cards/props.jpg |
+| The Lady's face | her leftmost front view; three close-ups | cards/lady.jpg, cards/lady-face.jpg |
+
+Style: painted American realism in the manner of Bo Bartlett (bible/style.md). Bodies slender and realistically proportioned.
