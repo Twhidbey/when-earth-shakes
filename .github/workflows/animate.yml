@@ -1,0 +1,51 @@
+# Animate one still on Modal (Wan 2.2) and commit the clip to clips/.
+# Run it from the Actions tab ("Animate a still", Run workflow) or through the API.
+# Needs repo secrets MODAL_TOKEN_ID and MODAL_TOKEN_SECRET (Settings > Secrets and variables > Actions).
+name: Animate a still
+on:
+  workflow_dispatch:
+    inputs:
+      still: {description: "Still, e.g. stills/12-plume_of_smoke2.png", required: true}
+      prompt: {description: "Motion prompt", required: true}
+      out: {description: "Clip path, e.g. clips/12-smoke.mp4", required: true}
+      model: {description: "5b (cheap test) or 14b (quality)", default: "5b"}
+      frames: {description: "Frames (81 = about 3.4 s at 24 fps on 5b, 5 s at 16 fps on 14b)", default: "81"}
+      seed: {description: "Seed", default: "1"}
+permissions:
+  contents: write
+concurrency:
+  group: animate
+  cancel-in-progress: false
+jobs:
+  animate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - run: pip install modal
+      - name: Run on Modal
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+          STILL: ${{ inputs.still }}
+          PROMPT: ${{ inputs.prompt }}
+          OUT: ${{ inputs.out }}
+          MODEL: ${{ inputs.model }}
+          FRAMES: ${{ inputs.frames }}
+          SEED: ${{ inputs.seed }}
+        run: |
+          start=$(date +%s)
+          modal run tools/animate_modal.py --still "$STILL" --prompt "$PROMPT" --out "$OUT" \
+            --model "$MODEL" --frames "$FRAMES" --seed "$SEED"
+          echo "Modal wall time: $(( $(date +%s) - start )) s" | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Commit the clip
+        env: {OUT: "${{ inputs.out }}"}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$OUT"
+          git commit -m "Clip: $OUT (Wan 2.2 ${{ inputs.model }} on Modal)"
+          git pull --rebase origin main
+          git push origin HEAD:main
