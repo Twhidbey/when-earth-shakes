@@ -11,8 +11,8 @@
 | The year | 1930s for the main story; the boy's childhood about 1910 | |
 
 | The helmet (final) | the FIRST grey helmet: pale grey-tan steel, wide letterbox slot, dark cloth hood | cards/helmet.jpg |
-| The overcoat | long rust-brown wool, singed at the hem | cards/props.jpg |
+| The overcoat | long rust-brown wool, singed at the hem; ALWAYS buttoned up all the way with the collar turned up (owner) | cards/props.jpg |
 | The sword | the straight old sword: straight double-edged blade, plain iron cross-guard, cord grip, round pommel | cards/props.jpg |
-| The Lady's face | her leftmost front view; three close-ups | cards/lady.jpg, cards/lady-face.jpg |
+| The Lady's face | her ORIGINAL Midjourney face (14 above all, also 50 and 09): cards/lady-face-original.jpg; the three views painted from 14 | cards/lady-face.jpg, cards/lady-face-original.jpg |
 
 Style: painted American realism in the manner of Bo Bartlett (bible/style.md). Bodies slender and realistically proportioned.
