@@ -23,3 +23,8 @@ Shots the examples suggest for this story:
 Slender and realistically proportioned, as in American realist painting: long legs, narrow shoulders, long limbs, about 8 heads tall.
 For the cards only, cropped bodies (shoulders down, no faces) from the owner's example paintings were given to the
 image model as a proportion reference, at the owner's request. They are not stored in the repo and are not reproduced.
+
+## Mood reference (Nov 21)
+For the sample scene C, details of sky, land and light only (no figures, no compositions) cropped from four of the
+owner's example Bo Bartlett paintings were given to the image model as a mood reference for light, colour and paint.
+They are not stored in the repo. Every picture keeps our own composition and characters.
