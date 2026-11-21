@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Character canon picker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+/*
+VOICE: a film's casting and props board: calm, decisive, warm.
+IDEA: the director's pinboard, photographs pinned in rows, one circled in red per row.
+PICTURE: the stills themselves, large; the chosen one ringed in the story's red.
+COLOUR and TYPE: scorched umber ground, wheat-cream text, one ember red for the choice; Cinzel titles, EB Garamond text.
+LAYOUT: one section per decision, a scrolling row of pictures, a summary bar that saves.
+*/
+:root{color-scheme:light dark;--bg:light-dark(#efe6d6,#1c1511);--card:light-dark(#fffaf1,#2a201a);--ink:light-dark(#2a1d14,#efe2cb);--soft:light-dark(#6b5846,#bba68a);--red:#c4361f;--line:light-dark(#d9c9ae,#43342a)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 "EB Garamond",Georgia,serif;overflow-x:clip}
+header{padding:clamp(24px,4vw,48px) max(5vw,16px) 8px;max-width:1240px;margin:auto}
+h1{font:600 clamp(30px,5vw,48px)/1.05 Cinzel,serif;margin:0 0 10px;text-wrap:balance}
+header p{margin:0;color:var(--soft);max-width:62ch}
+section{padding:22px max(5vw,16px);max-width:1240px;margin:auto;border-top:1px solid var(--line)}
+h2{font:500 26px/1.15 Cinzel,serif;margin:0 0 4px}
+.hint{color:var(--soft);margin:0 0 14px;max-width:70ch}
+.row{display:flex;gap:14px;overflow-x:auto;padding:6px 4px 14px;scroll-snap-type:x proximity}
+.opt{flex:none;scroll-snap-align:start;background:var(--card);border:2px solid transparent;border-radius:10px;padding:8px;cursor:pointer;text-align:left;color:inherit;font:inherit;width:min(240px,62vw);transition:transform .15s,border-color .15s}
+.opt.wide{width:min(320px,78vw)}
+.opt img{display:block;width:100%;height:240px;object-fit:cover;border-radius:6px;background:#0002}
+.opt b{display:block;font-weight:500;margin-top:8px}
+.opt span{display:block;color:var(--soft);font-size:15px;line-height:1.35}
+.opt:hover{transform:translateY(-2px)}
+.opt:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+.opt[aria-pressed=true]{border-color:var(--red);box-shadow:0 0 0 3px color-mix(in srgb,var(--red) 35%,transparent)}
+.opt[aria-pressed=true] b::after{content:"  ✓ chosen";color:var(--red);font-size:14px}
+.rec{display:inline-block;font-size:13px;color:var(--red);margin-left:4px}
+textarea{width:100%;min-height:90px;font:16px/1.5 "EB Garamond",serif;padding:10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.bar{position:sticky;bottom:0;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(6px);border-top:1px solid var(--line);padding:12px max(5vw,16px)}
+.bar div{max-width:1240px;margin:auto;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+#sum{color:var(--soft);font-size:15px;flex:1 1 320px}
+button.act{font:500 16px "EB Garamond",serif;min-height:44px;padding:0 20px;border-radius:22px;border:0;background:var(--red);color:#fff;cursor:pointer}
+button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+#status{font-size:15px;color:var(--soft);width:100%}
+@media (prefers-reduced-motion:reduce){.opt{transition:none}.opt:hover{transform:none}}
+</style>
+</head>
+<body>
+<header>
+<h1>When Earth Shakes: choosing the canon</h1>
+<p>Tap the version you want in each row. Your choices save so Claude can read them, and every new picture and animation will follow them. Rows scroll sideways.</p>
+</header>
+<main id="main"></main>
+<section>
+<h2>Anything else</h2>
+<p class="hint">A mix of two pictures, a change you want, anything the choices above miss.</p>
+<textarea id="notes" placeholder="e.g. helmet B's shape but darker; his face from A, hair from C"></textarea>
+</section>
+<div class="bar"><div>
+<span id="sum">Nothing chosen yet.</span>
+<span><button class="act ghost" id="copy">Copy</button> <button class="act" id="save">Save my choices</button></span>
+<span id="status"></span>
+</div></div>
+<script>
+{
+const Q = [
+ {k:'helmet', t:'The welding helmet', h:'Five different helmets appear in the stills. Which one is the real one?', o:[
+  ['h-a','A · Blue-grey steel, big window','His eyes show through (22).'],
+  ['h-b','B · Flat-fronted hood, narrow slot','What a 1930 welder wore (25).',1],
+  ['h-c','C · The same hood, closer','(26)'],
+  ['h-d','D · Glossy black shell','Wide visor, modern look (35).'],
+  ['h-e','E · Black shell in the water','(36)'],
+  ['h-f','F · Bronze bucket','Knight-like (36b).'],
+  ['h-g','G · Dark bucket','Narrow slot, in silhouette (39).']]},
+ {k:'face', t:'The Bookkeeper: his face', h:'At least three different men so far. Whose face is he?', o:[
+  ['b-a','A · Slim and bookish','The bookshop (07).',1],
+  ['b-b','B · Fuller face','At his desk (08).'],
+  ['b-c','C · Lean, plain','In the wheat with the red box (11).'],
+  ['b-d','D · Square-jawed','Bandaged in bed (16).'],
+  ['b-e','E · Square-jawed, longer hair','The bandaged stare (20).']]},
+ {k:'look', t:'The Bookkeeper: hair and clothes', h:'Separately from the face: how does he dress and wear his hair?', o:[
+  ['l-a','A · Dark jacket, open collar','Wavy hair (07).'],
+  ['l-b','B · Olive work jacket, grey shirt','(08)'],
+  ['l-c','C · White shirt, braces, side parting','Very 1930 (11).',1],
+  ['l-d','D · The same, from behind','(12)']]},
+ {k:'lady', t:'The Lady: her face', h:'She is already the most consistent. Which one is closest?', o:[
+  ['w-a','A · Hair pinned up','The bookshop (09).'],
+  ['w-b','B · Loose waves, warm light','In the wheat (14).',1],
+  ['w-c','C · Loose waves, storm sky','(50)']]},
+ {k:'outfit', t:'The Lady: what she wears', h:'The close-ups show a modern T-shirt. A 1930 woman would wear a cotton dress or blouse.', o:[
+  ['o-a','A · White T-shirt','As in the close-ups (09).'],
+  ['o-b','B · Long white cotton dress','The red field (44).',1],
+  ['o-c','C · The same dress, burnt field','(14)']]},
+ {k:'boy', t:'The boy', h:'Mostly consistent: brown hair, seen from behind. Keep him as he is?', o:[
+  ['k-a','A · Shorts, pale shirt','The house (01).'],
+  ['k-b','B · In bed','(02)'],
+  ['k-c','C · Long trousers, pale shirt','The dream (04).',1],
+  ['k-d','D · Red shirt, khaki trousers','The kitchen (06).']]},
+ {k:'era', t:'The year', h:'Some stills look like 1930, others like the 1950s. When is it set?', w:1, o:[
+  ['e-a','1930s, boy around 1910','Farmhouses, braces, old cars. I remake the modern-looking stills.',1],
+  ['e-b','1950s throughout','Matches the ranch house, kitchen and car as they are.'],
+  ['e-c','Timeless','No set year; only remove what looks clearly modern.']]}
+];
+const pick = {};
+const main = document.getElementById('main');
+main.innerHTML = Q.map(q => `<section id="${q.k}"><h2>${q.t}</h2><p class="hint">${q.h}</p><div class="row">` +
+  q.o.map(([id, b, s, rec]) => `<button class="opt${q.w ? ' wide' : ''}" data-k="${q.k}" data-v="${id}" aria-pressed="false"><img src="img/${id}.jpg" alt="${b}" loading="lazy"><b>${b}</b><span>${s}${rec ? ' <i class="rec">my suggestion</i>' : ''}</span></button>`).join('') +
+  `</div></section>`).join('');
+const label = (k, v) => { const q = Q.find(x => x.k === k); const o = q && q.o.find(x => x[0] === v); return o ? o[1] : v; };
+const notes = document.getElementById('notes'), sum = document.getElementById('sum'), status = document.getElementById('status');
+function paint() {
+  document.querySelectorAll('.opt').forEach(b => b.setAttribute('aria-pressed', pick[b.dataset.k] === b.dataset.v ? 'true' : 'false'));
+  const n = Object.keys(pick).length;
+  sum.textContent = n ? `${n} of ${Q.length} chosen` + (n < Q.length ? ` · still to choose: ${Q.filter(q => !pick[q.k]).map(q => q.t).join(', ')}` : ' · all done') : 'Nothing chosen yet.';
+}
+main.addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b) return;
+  pick[b.dataset.k] = pick[b.dataset.k] === b.dataset.v ? undefined : b.dataset.v;
+  if (!pick[b.dataset.k]) delete pick[b.dataset.k];
+  paint(); try { localStorage.setItem('wes-picks', JSON.stringify({pick, notes: notes.value})); } catch (_) {}
+});
+notes.addEventListener('input', () => { try { localStorage.setItem('wes-picks', JSON.stringify({pick, notes: notes.value})); } catch (_) {} });
+try { const s = JSON.parse(localStorage.getItem('wes-picks') || 'null'); if (s) { Object.assign(pick, s.pick || {}); notes.value = s.notes || ''; } } catch (_) {}
+paint();
+function text() { return Q.map(q => `${q.t}: ${pick[q.k] ? label(q.k, pick[q.k]) : '(not chosen)'}`).join('\n') + (notes.value.trim() ? `\nNotes: ${notes.value.trim()}` : ''); }
+document.getElementById('copy').addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText(text()); status.textContent = 'Copied. Paste it into the chat if saving does not work.'; }
+  catch (_) { status.textContent = 'Copy was blocked here; use Save instead.'; }
+});
+let db = null;
+(async () => {
+  try {
+    db = await claude.use('db');
+    if (!db) return;
+    const t = setTimeout(() => {}, 10000);
+    const snap = await db.doc('picks/choices').get();
+    clearTimeout(t);
+    const d = snap && (snap.data ? snap.data() : snap);
+    if (d && d.pick && !Object.keys(pick).length) { Object.assign(pick, d.pick); notes.value = d.notes || ''; paint(); status.textContent = 'Loaded your saved choices.'; }
+  } catch (_) {}
+})();
+document.getElementById('save').addEventListener('click', async () => {
+  if (!db) { status.textContent = 'Saving is not available here. Use Copy and paste it into the chat.'; return; }
+  status.textContent = 'Saving…';
+  try {
+    const labels = {}; for (const k in pick) labels[k] = label(k, pick[k]);
+    await db.doc('picks/choices').set({pick, labels, notes: notes.value.trim(), saved: new Date().toISOString()});
+    status.textContent = 'Saved. Tell Claude in the chat that you are done.';
+  } catch (e) { status.textContent = 'Could not save (' + (e && e.message || 'error') + '). Use Copy instead.'; }
+});
+}
+</script>
+</body>
+</html>
